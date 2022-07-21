@@ -21,6 +21,10 @@ export default class ZimuApi {
 
     static async insertClip(clip) {
         const url = `${config.zimu.url}/clips`;
-        return await axios.post(url, {Authorization: `Bearer ${config.zimu.auth}`}, clip);
+        return await axios.post(url, clip, {
+            headers: {
+                'Authorization': `Bearer ${config.zimu.auth}`
+            }
+        });
     }
 }
