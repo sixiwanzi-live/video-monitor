@@ -33,7 +33,7 @@ import ZimuApi from './api/ZimuApi.js';
         });
         // 上传封面图
         const res1 = await ZimuApi.upload(`${config.tmp.path}/${bvid}.jpg`);
-        console.log(res1.filename);
+        console.log(res1);
     }
     await promisify(fs.writeFile)('bv.json', JSON.stringify(items));
 })();
