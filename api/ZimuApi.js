@@ -10,12 +10,13 @@ export default class ZimuApi {
         await new Promise((res, rej) => {
             exec.exec(cmd, (error, stdout, stderr) => {
                 if (error) {
+                    console.log(stderr);
                     rej(error);
                 } else {
-                    console.log(stdout);
-                    console.log(stderr);
+                    const json = JSON.parse(stdout);
+                    console.log(json);
+                    res(json);
                 }                
-                res();
             });
         });
     }
