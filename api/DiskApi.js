@@ -6,5 +6,6 @@ export default class DiskApi {
         const url = `${config.disk.url}/disks`;
         const res = await axios.post(url, {bv});
         console.log(res.data);
+        return res.data;
     }
 }

@@ -21,8 +21,9 @@ import DiskApi from './api/DiskApi.js';
         if (bvid === items[i].bv) {
             continue;
         }
+        items[i].bv = bvid;
         console.log(`${title},${bvid},${pic}`);
-        await PushApi.push(`发现新视频[${title}]`, `bv:${bvid},authorId:${authorId}`);
+        await PushApi.push(`[发现新视频] ${title}`, `bv:${bvid},authorId:${authorId}`);
 
         // 修正标题
         title = title.replaceAll('【直播回放】', '');
@@ -60,8 +61,6 @@ import DiskApi from './api/DiskApi.js';
         });
         if (res2.code) {
             await PushApi.push(`视频[${title}]新增失败`, res2.message);
-        } else {
-            items[i].bv = bvid;
         }
 
         // 下载视频
