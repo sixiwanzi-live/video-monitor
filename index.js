@@ -2,6 +2,7 @@ import fs from 'fs';
 import { promisify } from 'util';
 import exec from 'child_process';
 import axios from 'axios';
+import moment from 'moment';
 import config from './config.js';
 import PushApi from './api/PushApi.js';
 import ZimuApi from './api/ZimuApi.js';
@@ -10,12 +11,21 @@ import ZimuApi from './api/ZimuApi.js';
     const file = await promisify(fs.readFile)('bv.json', 'utf-8');
     const items = JSON.parse(file);
     for (let i = 0; i < items.length; i++) {
+        const authorId = items[0].id;
         const res = await axios.get(items[i].url);
         const video = res.data.data.archives[0];
-        const title = video.title;
+        let title = video.title;
         const bvid = video.bvid;
         const pic = video.pic;
         console.log(`${title},${bvid},${pic}`);
+
+        // 修正标题
+        title = title.replaceAll('【直播回放】', '');
+        const pubdate = title.substring(title.lastIndexOf(' '), title.length);
+        const datetime = moment(pubdate, 'YYYY年M月D日H点场').format('YYYY-MM-DD HH:mm:ss');
+        console.log(datetime);
+        title = title.substring(0, title.lastIndexOf(' '));
+        console.log(title);
 
         // 下载封面图
 	    const cmd = `wget ${pic} -O ${config.tmp.path}/${bvid}.jpg`;
@@ -33,7 +43,16 @@ import ZimuApi from './api/ZimuApi.js';
         });
         // 上传封面图
         const res1 = await ZimuApi.upload(`${config.tmp.path}/${bvid}.jpg`);
-        console.log(res1);
+        const filename = res1.filename;
+
+        // 新增clip
+        const res2 = await ZimuApi.insertClip({
+            authorId: authorId,
+            title: title,
+            datetime: datetime,
+            bv: bvid,
+            filename: filename
+        });
     }
     await promisify(fs.writeFile)('bv.json', JSON.stringify(items));
 })();

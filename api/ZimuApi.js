@@ -17,5 +17,10 @@ export default class ZimuApi {
                 }                
             });
         });
+    };
+
+    static async insertClip(clip) {
+        const url = `${config.zimu.url}/clips`;
+        return await axios.post(url, clip);
     }
 }
