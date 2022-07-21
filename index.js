@@ -11,7 +11,7 @@ import ZimuApi from './api/ZimuApi.js';
     const file = await promisify(fs.readFile)('bv.json', 'utf-8');
     const items = JSON.parse(file);
     for (let i = 0; i < items.length; i++) {
-        const authorId = items[0].id;
+        const authorId = items[i].id;
         const res = await axios.get(items[i].url);
         const video = res.data.data.archives[0];
         let title = video.title;
