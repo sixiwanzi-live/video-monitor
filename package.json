@@ -1,0 +1,23 @@
+{
+  "name": "video-monitor",
+  "version": "1.0.0",
+  "description": "监控录播是否发布，如果发布则自动加入字幕库",
+  "type": "module",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sixiwanzi-live/video-monitor.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/sixiwanzi-live/video-monitor/issues"
+  },
+  "homepage": "https://github.com/sixiwanzi-live/video-monitor#readme",
+  "dependencies": {
+    "axios": "^0.27.2"
+  }
+}
