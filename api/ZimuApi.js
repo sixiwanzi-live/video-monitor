@@ -13,9 +13,7 @@ export default class ZimuApi {
                     console.log(stderr);
                     rej(error);
                 } else {
-                    const json = JSON.parse(stdout);
-                    console.log(json);
-                    res(json);
+                    res(JSON.parse(stdout));
                 }                
             });
         });
