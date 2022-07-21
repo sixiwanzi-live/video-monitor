@@ -5,7 +5,7 @@ import config from '../config.js';
 export default class ZimuApi {
     static async upload(image) {
         const url = `${config.zimu.url}/files/image`;
-        const cmd = `curl -H "Authorization: Bearer ${config.zimu.auth}" -F file=@${image} ${url}`;
+        const cmd = `curl -s -H "Authorization: Bearer ${config.zimu.auth}" -F file=@${image} ${url}`;
         console.log(cmd);
         await new Promise((res, rej) => {
             exec.exec(cmd, (error, stdout, stderr) => {
