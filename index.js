@@ -53,7 +53,9 @@ import ZimuApi from './api/ZimuApi.js';
             bv: bvid,
             filename: filename
         });
-        console.log(res2);
+        if (res2.code) {
+            await PushApi.push(`视频[${title}]上传失败`, res2.message);
+        }
     }
     await promisify(fs.writeFile)('bv.json', JSON.stringify(items));
 })();

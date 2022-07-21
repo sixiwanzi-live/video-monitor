@@ -28,7 +28,7 @@ export default class ZimuApi {
                 }
             });
         } catch (ex) {
-            return ex.response;
+            return ex.response.data;
         }
     }
 }
