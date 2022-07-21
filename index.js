@@ -6,6 +6,7 @@ import moment from 'moment';
 import config from './config.js';
 import PushApi from './api/PushApi.js';
 import ZimuApi from './api/ZimuApi.js';
+import DiskApi from './api/DiskApi.js';
 
 (async () => {
     const file = await promisify(fs.readFile)('bv.json', 'utf-8');
@@ -17,7 +18,11 @@ import ZimuApi from './api/ZimuApi.js';
         let title = video.title;
         const bvid = video.bvid;
         const pic = video.pic;
+        if (bvid === items[i].bv) {
+            continue;
+        }
         console.log(`${title},${bvid},${pic}`);
+        await PushApi.push(`发现新视频[${title}]`, `bv:${bvid},authorId:${authorId}`);
 
         // 修正标题
         title = title.replaceAll('【直播回放】', '');
@@ -54,8 +59,14 @@ import ZimuApi from './api/ZimuApi.js';
             filename: filename
         });
         if (res2.code) {
-            await PushApi.push(`视频[${title}]上传失败`, res2.message);
+            await PushApi.push(`视频[${title}]新增失败`, res2.message);
+        } else {
+            items[i].bv = bvid;
         }
+
+        // 下载视频
+        const res3 = await DiskApi.save(bvid);
+        console.log(res3);
     }
     await promisify(fs.writeFile)('bv.json', JSON.stringify(items));
 })();
