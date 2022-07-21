@@ -4,6 +4,7 @@ import exec from 'child_process';
 import axios from 'axios';
 import config from './config.js';
 import PushApi from './api/PushApi.js';
+import ZimuApi from './api/ZimuApi.js';
 
 (async () => {
     const file = await promisify(fs.readFile)('bv.json', 'utf-8');
@@ -30,6 +31,8 @@ import PushApi from './api/PushApi.js';
                 res();
             });
         });
+        // 上传封面图
+        await ZimuApi.upload(`${config.tmp.path}/${bvid}.jpg`);
     }
     await promisify(fs.writeFile)('bv.json', JSON.stringify(items));
 })();
