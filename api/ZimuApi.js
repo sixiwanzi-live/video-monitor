@@ -7,7 +7,7 @@ export default class ZimuApi {
         const url = `${config.zimu.url}/files/image`;
         const cmd = `curl -s -H "Authorization: Bearer ${config.zimu.auth}" -F file=@${image} ${url}`;
         console.log(cmd);
-        await new Promise((res, rej) => {
+        return await new Promise((res, rej) => {
             exec.exec(cmd, (error, stdout, stderr) => {
                 if (error) {
                     console.log(stderr);
