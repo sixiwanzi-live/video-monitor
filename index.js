@@ -53,6 +53,7 @@ import ZimuApi from './api/ZimuApi.js';
             bv: bvid,
             filename: filename
         });
+        console.log(res2);
     }
     await promisify(fs.writeFile)('bv.json', JSON.stringify(items));
 })();
