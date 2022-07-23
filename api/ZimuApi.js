@@ -1,6 +1,7 @@
 import exec from 'child_process';
 import axios from 'axios';
 import config from '../config.js';
+import PushApi from './PushApi.js';
 
 export default class ZimuApi {
     static async upload(image) {
@@ -29,6 +30,16 @@ export default class ZimuApi {
             });
         } catch (ex) {
             return ex.response.data;
+        }
+    }
+
+    static async findLatestClipByAuthorId(authorId) {
+        const url = `${config.zimu.url}/authors/${authorId}/latest-clip`;
+        try {
+            return await axios.get(url);
+        } catch (ex) {
+            console.log(ex);
+            await PushApi.push(`查找author(${authorId})的最新视频失败`, ex.response.data);
         }
     }
 }
