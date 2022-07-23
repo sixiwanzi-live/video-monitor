@@ -66,10 +66,10 @@ import DiskApi from './api/DiskApi.js';
             // 上传封面图
             try {
                 const res1 = await ZimuApi.upload(`${config.tmp.path}/${bvid}.jpg`);
-                filename = res1.data.filename;
+                filename = res1.filename;
             } catch (ex) {
                 console.log(ex);
-                PushApi.push(`上传"${title}"封面图失败`, ex.response.data);
+                PushApi.push(`上传"${title}"封面图失败`, ex);
                 continue;
             }
             
