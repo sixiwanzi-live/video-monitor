@@ -27,6 +27,7 @@ import DiskApi from './api/DiskApi.js';
         try {
             const res2 = await ZimuApi.findLatestClipByAuthorId(authorId);  // 请求字幕库中的最新视频
             if (res2.data.bv === bvid) {
+                console.log(`作者${authorId}的最新视频为${res2.data.bv}, 无变化`);
                 continue;
             }
             await PushApi.push(`[发现新视频] ${title}`, `bv:${bvid},authorId:${authorId}`);
