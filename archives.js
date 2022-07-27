@@ -18,5 +18,9 @@ export default [
     {
         id: 7,
         url: 'https://api.bilibili.com/x/series/archives?mid=198297&series_id=210350&sort=desc'
+    },
+    {
+        id: 15,
+        url: 'https://api.bilibili.com/x/series/archives?mid=1219196749&series_id=2065795&sort=desc'
     }
 ];
