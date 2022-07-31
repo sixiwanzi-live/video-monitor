@@ -7,7 +7,7 @@ import ZimuApi from './api/ZimuApi.js';
 import DiskApi from './api/DiskApi.js';
 
 (async () => {
-    const authorId = 15;
+    const authorId = 16;
     try {
         const res1 = await axios.get('https://api.bilibili.com/x/series/archives?mid=1383815813&series_id=2060096&sort=desc&pn=1&ps=300');  // 请求合集列表
         const archives = res1.data.data.archives;
