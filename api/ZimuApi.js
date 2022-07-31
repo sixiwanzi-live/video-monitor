@@ -42,4 +42,14 @@ export default class ZimuApi {
             await PushApi.push(`查找author(${authorId})的最新视频失败`, ex.response.data);
         }
     }
+
+    static async findClipsByOrganizationId(organizationId) {
+        const url = `${config.zimu.url}/organizations/${organizationId}/clips`;
+        try {
+            return await axios.get(url);
+        } catch (ex) {
+            console.log(ex);
+            await PushApi.push(`查找organization(${organizationId})的视频列表失败`, ex.response.data);
+        }
+    }
 }
