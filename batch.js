@@ -7,9 +7,9 @@ import ZimuApi from './api/ZimuApi.js';
 import DiskApi from './api/DiskApi.js';
 
 (async () => {
-    const authorId = 16;
+    const authorId = 17;
     try {
-        const res1 = await axios.get('https://api.bilibili.com/x/series/archives?mid=1383815813&series_id=2060096&sort=desc&pn=1&ps=300');  // 请求合集列表
+        const res1 = await axios.get('https://api.bilibili.com/x/series/archives?mid=1011797664&series_id=2302706&only_normal=true&sort=desc&pn=1&ps=300');  // 请求合集列表
         const archives = res1.data.data.archives;
         for (let i = 0; i < archives.length; ++i) {
             const archive = archives[i];
