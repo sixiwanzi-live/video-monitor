@@ -30,5 +30,9 @@ export default [
     {
         id: 16,
         url: 'https://api.bilibili.com/x/series/archives?mid=1383815813&series_id=2060096&sort=desc&pn=1&ps=1'
+    },
+    {
+        id: 17,
+        url: 'https://api.bilibili.com/x/series/archives?mid=1011797664&series_id=2302706&sort=desc&pn=1&ps=1'
     }
 ];
