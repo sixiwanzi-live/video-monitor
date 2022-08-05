@@ -69,7 +69,7 @@ import DiskApi from './api/DiskApi.js';
                 continue;
             }
         } catch (ex) {
-            console.log(ex);
+            console.log(ex.response.data);
             PushApi.push(`请求author(${authorId})的字幕库最近视频失败`, ex.response.data);
             continue;
         }
