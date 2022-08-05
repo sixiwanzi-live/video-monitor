@@ -1,7 +1,6 @@
 import exec from 'child_process';
 import axios from 'axios';
 import moment from 'moment';
-import config from './config.js';
 import archives from './archives.js';
 import PushApi from './api/PushApi.js';
 import ZimuApi from './api/ZimuApi.js';
@@ -42,37 +41,8 @@ import DiskApi from './api/DiskApi.js';
             title = title.substring(0, title.lastIndexOf(' '));
             console.log(`标题:${title}`);
 
-            // 下载封面图
-            const cmd1 = `wget ${pic} -O ${config.tmp.path}/${bvid}.jpg`;
-            console.log(`下载封面图命令:${cmd1}`);
-            try {
-                await new Promise((res, rej) => {
-                    exec.exec(cmd1, (error, stdout, stderr) => {
-                        if (error) {
-                            rej(error);
-                        } else {
-                            console.log(stdout);
-                            console.log(stderr);
-                        }                
-                        res();
-                    });
-                });
-            } catch (ex) {
-                console.log(ex);
-                PushApi.push(`下载"${title}"封面图失败`, ex.response.data);
-                continue;
-            }
-
-            let filename = '';
-            // 上传封面图
-            try {
-                const res1 = await ZimuApi.upload(`${config.tmp.path}/${bvid}.jpg`);
-                filename = res1.filename;
-            } catch (ex) {
-                console.log(ex);
-                PushApi.push(`上传"${title}"封面图失败`, ex);
-                continue;
-            }
+            const cover = pic.substring(7);
+            console.log(`封面:${cover}`);
             
             // 新增clip
             try {
@@ -81,9 +51,9 @@ import DiskApi from './api/DiskApi.js';
                     title: title,
                     datetime: datetime,
                     bv: bvid,
-                    filename: filename
+                    cover: cover
                 });
-                PushApi.push(`新增"${title}"clip成功`, `authorId:${authorId},title:${title},datetime:${datetime},bv:${bvid}`);
+                PushApi.push(`新增"${title}"clip成功`, `authorId:${authorId},title:${title},datetime:${datetime},bv:${bvid},cover:${cover}`);
             } catch (ex) {
                 console.log(ex);
                 PushApi.push(`新增"${title}"clip失败`, ex.response.data);
