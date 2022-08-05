@@ -33,6 +33,19 @@ export default class ZimuApi {
         }
     }
 
+    static async updateClip(clip) {
+        const url = `${config.zimu.url}/clips/${clip.id}`;
+        try {
+            return await axios.put(url, clip, {
+                headers: {
+                    'Authorization': `Bearer ${config.zimu.auth}`
+                }
+            });
+        } catch (ex) {
+            return ex.response.data;
+        }
+    }
+
     static async findLatestClipByAuthorId(authorId) {
         const url = `${config.zimu.url}/authors/${authorId}/latest-clip`;
         try {
