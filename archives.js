@@ -20,6 +20,22 @@ export default [
         url: 'https://api.bilibili.com/x/series/archives?mid=198297&series_id=210350&sort=desc&pn=1&ps=1'
     },
     {
+        id: 9,
+        url: 'https://api.bilibili.com/x/series/archives?mid=1875044092&series_id=2508539&sort=desc&pn=1&ps=1'
+    },
+    {
+        id: 10,
+        url: 'https://api.bilibili.com/x/series/archives?mid=1669777785&series_id=2519501&sort=desc&pn=1&ps=1'
+    },
+    {
+        id: 11,
+        url: 'https://api.bilibili.com/x/series/archives?mid=1778026586&series_id=2513879&sort=desc&pn=1&ps=1'
+    },
+    {
+        id: 12,
+        url: 'https://api.bilibili.com/x/series/archives?mid=1795147802&series_id=2516609&sort=desc&pn=1&ps=1'
+    },
+    {
         id: 14,
         url: 'https://api.bilibili.com/x/series/archives?mid=2132180406&series_id=2484684&sort=desc&pn=1&ps=1'
     },
