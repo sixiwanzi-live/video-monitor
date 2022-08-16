@@ -8,8 +8,6 @@ import DiskApi from './api/DiskApi.js';
 (async () => {
     for (let i = 0; i < archives.length; ++i) {
         const authorId = archives[i].id;
-        const mode = archives[i].mode;
-        if (mode === 1) continue;
         let video = {};
         try {
             const res1 = await axios.get(archives[i].url);  // 请求合集列表
