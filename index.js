@@ -1,4 +1,3 @@
-import exec from 'child_process';
 import axios from 'axios';
 import moment from 'moment';
 import archives from './archives.js';
@@ -9,6 +8,8 @@ import DiskApi from './api/DiskApi.js';
 (async () => {
     for (let i = 0; i < archives.length; ++i) {
         const authorId = archives[i].id;
+        const mode = archives[i].mode;
+        if (mode === 1) continue;
         let video = {};
         try {
             const res1 = await axios.get(archives[i].url);  // 请求合集列表
@@ -22,6 +23,7 @@ import DiskApi from './api/DiskApi.js';
         let title   = video.title;
         const bvid  = video.bvid;
         const pic   = video.pic;
+        console.log(title, bvid, pic);
 
         try {
             const res2 = await ZimuApi.findLatestClipByAuthorId(authorId);  // 请求字幕库中的最新视频
@@ -31,14 +33,29 @@ import DiskApi from './api/DiskApi.js';
             }
             await PushApi.push(`[发现新视频] ${title}`, `bv:${bvid},authorId:${authorId}`);
 
+            if (authorId === 20) {
+                title = title.replaceAll('【麻尤米录播】', '');
+            }
+
             // 获取直播时间
-            const pubdate = title.substring(title.lastIndexOf(' '), title.length);
-            const datetime = moment(pubdate, 'YYYY年M月D日H点场').format('YYYY-MM-DD HH:mm:ss');
+            let datetime = '';
+            if (authorId === 20) {
+                const pubdate = title.match(/^\d+\.\d+/)[0];
+                atetime = moment(pubdate, 'MM.DD').format('YYYY-MM-DD HH:mm:ss');
+            } else {
+                const pubdate = title.substring(title.lastIndexOf(' '), title.length);
+                datetime = moment(pubdate, 'YYYY年M月D日H点场').format('YYYY-MM-DD HH:mm:ss');
+            }
             console.log(`直播时间:${datetime}`);
 
             // 修正标题
-            title = title.replaceAll('【直播回放】', '');
-            title = title.substring(0, title.lastIndexOf(' '));
+            let title = '';
+            if (authorId === 20) {
+                title = title.substring(title.indexOf(' '), title.length);
+            } else {
+                title = title.replaceAll('【直播回放】', '');
+                title = title.substring(0, title.lastIndexOf(' '));
+            }
             console.log(`标题:${title}`);
 
             const cover = pic.substring(7);
