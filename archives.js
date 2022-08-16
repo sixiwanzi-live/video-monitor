@@ -16,6 +16,10 @@ export default [
         url: 'https://api.bilibili.com/x/series/archives?mid=1217754423&series_id=1975929&sort=desc&pn=1&ps=1'
     },
     {
+        id: 5,
+        url: 'https://api.bilibili.com/x/series/archives?mid=1230039261&series_id=2223855&sort=desc&pn=1&ps=1'
+    },
+    {
         id: 7,
         url: 'https://api.bilibili.com/x/series/archives?mid=198297&series_id=210350&sort=desc&pn=1&ps=1'
     },
@@ -54,5 +58,9 @@ export default [
     {
         id: 17,
         url: 'https://api.bilibili.com/x/series/archives?mid=1011797664&series_id=2302706&sort=desc&pn=1&ps=1'
+    },
+    {
+        id: 19,
+        url: 'https://api.bilibili.com/x/series/archives?mid=1535525542&series_id=2205073&sort=desc&pn=1&ps=1'
     }
 ];
