@@ -18,7 +18,7 @@ import DiskApi from './api/DiskApi.js';
             continue;
         }
 
-        let title   = video.title;
+        let title = video.title;
         const bvid  = video.bvid;
         const pic   = video.pic;
         console.log(title, bvid, pic);
@@ -29,6 +29,8 @@ import DiskApi from './api/DiskApi.js';
                 console.log(`作者${authorId}的最新视频为${res2.data.bv}, 无变化`);
                 continue;
             }
+
+            console.log(title);
             await PushApi.push(`[发现新视频] ${title}`, `bv:${bvid},authorId:${authorId}`);
 
             if (authorId === 20) {
@@ -39,7 +41,7 @@ import DiskApi from './api/DiskApi.js';
             let datetime = '';
             if (authorId === 20) {
                 const pubdate = title.match(/^\d+\.\d+/)[0];
-                atetime = moment(pubdate, 'MM.DD').format('YYYY-MM-DD HH:mm:ss');
+                datetime = moment(pubdate, 'MM.DD').format('YYYY-MM-DD HH:mm:ss');
             } else {
                 const pubdate = title.substring(title.lastIndexOf(' '), title.length);
                 datetime = moment(pubdate, 'YYYY年M月D日H点场').format('YYYY-MM-DD HH:mm:ss');
@@ -47,7 +49,6 @@ import DiskApi from './api/DiskApi.js';
             console.log(`直播时间:${datetime}`);
 
             // 修正标题
-            let title = '';
             if (authorId === 20) {
                 title = title.substring(title.indexOf(' '), title.length);
             } else {
@@ -84,8 +85,8 @@ import DiskApi from './api/DiskApi.js';
                 continue;
             }
         } catch (ex) {
-            console.log(ex.response.data);
-            PushApi.push(`请求author(${authorId})的字幕库最近视频失败`, ex.response.data);
+            console.log(ex);
+            PushApi.push(`请求author(${authorId})的字幕库最近视频失败`, ex);
             continue;
         }
     }
