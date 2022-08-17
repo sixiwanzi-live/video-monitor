@@ -66,9 +66,9 @@ export default [
     {
         id: 19,
         url: 'https://api.bilibili.com/x/series/archives?mid=1535525542&series_id=2205073&sort=desc&pn=1&ps=1'
+    },
+    {
+        id: 20,
+        url: 'https://api.bilibili.com/x/series/archives?mid=338283235&series_id=2505048&sort=desc&pn=1&ps=1'
     }
-    // {
-    //     id: 20,
-    //     url: 'https://api.bilibili.com/x/polymer/space/seasons_archives_list?mid=7262655&season_id=501913&sort_reverse=false&page_num=1&page_size=1'
-    // }
 ];

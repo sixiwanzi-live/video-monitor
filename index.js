@@ -40,8 +40,8 @@ import DiskApi from './api/DiskApi.js';
             // 获取直播时间
             let datetime = '';
             if (authorId === 20) {
-                const pubdate = title.match(/^\d+\.\d+/)[0];
-                datetime = moment(pubdate, 'MM.DD').format('YYYY-MM-DD HH:mm:ss');
+                const pubdate = title.split('——')[1].match(/^\d+\-\d+\-\d+/)[0];
+                datetime = moment(pubdate, 'YYYY-MM-DD').format('YYYY-MM-DD HH:mm:ss');
             } else {
                 const pubdate = title.substring(title.lastIndexOf(' '), title.length);
                 datetime = moment(pubdate, 'YYYY年M月D日H点场').format('YYYY-MM-DD HH:mm:ss');
@@ -50,7 +50,7 @@ import DiskApi from './api/DiskApi.js';
 
             // 修正标题
             if (authorId === 20) {
-                title = title.substring(title.indexOf(' '), title.length);
+                title = title.split('——')[0];
             } else {
                 title = title.replaceAll('【直播回放】', '');
                 title = title.substring(0, title.lastIndexOf(' '));
