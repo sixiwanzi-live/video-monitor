@@ -20,13 +20,17 @@ export default [
         url: 'https://api.bilibili.com/x/series/archives?mid=1230039261&series_id=2223855&sort=desc&pn=1&ps=1'
     },
     {
+        id: 6,
+        url: 'https://api.bilibili.com/x/series/archives?mid=1757836012&series_id=2202072&sort=desc&pn=1&ps=1'
+    },
+    {
         id: 7,
         url: 'https://api.bilibili.com/x/series/archives?mid=198297&series_id=210350&sort=desc&pn=1&ps=1'
     },
-    // {
-    //     id: 9,
-    //     url: 'https://api.bilibili.com/x/series/archives?mid=1875044092&series_id=2508539&sort=desc&pn=1&ps=1'
-    // },
+    {
+        id: 9,
+        url: 'https://api.bilibili.com/x/series/archives?mid=1875044092&series_id=2508539&sort=desc&pn=1&ps=1'
+    },
     {
         id: 10,
         url: 'https://api.bilibili.com/x/series/archives?mid=1669777785&series_id=2519501&sort=desc&pn=1&ps=1'
