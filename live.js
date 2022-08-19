@@ -7,7 +7,6 @@ const users = [{id: 20, uid: 1265605287}];
 
 (async () => {
     const liveInfoUrl = `https://api.live.bilibili.com/room/v1/Room/get_status_info_by_uids?${users.map(user => `uids[]=${user.uid}`).join('&')}`;
-    console.log(liveInfoUrl);
     try {
         const res = await axios.get(liveInfoUrl);
         const data = res.data.data;
