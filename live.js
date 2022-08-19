@@ -3,7 +3,7 @@ import moment from 'moment';
 import ZimuApi from './api/ZimuApi.js';
 import PushApi from './api/PushApi.js';
 
-const users = [{id: 20, uid: 1265605287}];
+const users = [{id:4, uid:1217754423}, {id: 20, uid: 1265605287}];
 
 (async () => {
     const liveInfoUrl = `https://api.live.bilibili.com/room/v1/Room/get_status_info_by_uids?${users.map(user => `uids[]=${user.uid}`).join('&')}`;
