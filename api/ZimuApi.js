@@ -4,22 +4,6 @@ import config from '../config.js';
 import PushApi from './PushApi.js';
 
 export default class ZimuApi {
-    static async upload(image) {
-        const url = `${config.zimu.url}/files/image`;
-        const cmd = `curl -s -H "Authorization: Bearer ${config.zimu.auth}" -F file=@${image} ${url}`;
-        console.log(cmd);
-        return await new Promise((res, rej) => {
-            exec.exec(cmd, (error, stdout, stderr) => {
-                if (error) {
-                    console.log(stderr);
-                    rej(error);
-                } else {
-                    res(JSON.parse(stdout));
-                }                
-            });
-        });
-    };
-
     static async insertClip(clip) {
         const url = `${config.zimu.url}/clips`;
         try {
