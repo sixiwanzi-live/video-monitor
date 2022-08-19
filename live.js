@@ -29,7 +29,7 @@ const users = [{id:4, uid:1217754423}, {id: 20, uid: 1265605287}];
                     console.log(`new:${clip.datetime}, latest:${res1.data.datetime}`);
                     if (res1.data.datetime !== clip.datetime) {
                         console.log('允许上传');
-                        //await ZimuApi.insertClip(clip);
+                        await ZimuApi.insertClip(clip);
                     } else {
                         console.log('重复');
                     }
