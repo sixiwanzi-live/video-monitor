@@ -5,18 +5,6 @@ import PushApi from './api/PushApi.js';
 
 const users = [
     {
-        id:4, 
-        uid:1217754423
-    }, 
-    {
-        id: 11,
-        uid: 1778026586
-    }, 
-    {
-        id: 12,
-        uid: 1795147802
-    },
-    {
         id: 20, 
         uid: 1265605287
     }
