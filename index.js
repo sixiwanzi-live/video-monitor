@@ -33,28 +33,15 @@ import DiskApi from './api/DiskApi.js';
             console.log(title);
             await PushApi.push(`[发现新视频] ${title}`, `bv:${bvid},authorId:${authorId}`);
 
-            if (authorId === 20) {
-                title = title.replaceAll('【麻尤米录播】', '');
-            }
-
             // 获取直播时间
             let datetime = '';
-            if (authorId === 20) {
-                const pubdate = title.split('——')[1].match(/^\d+\-\d+\-\d+/)[0];
-                datetime = moment(pubdate, 'YYYY-MM-DD').format('YYYY-MM-DD HH:mm:ss');
-            } else {
-                const pubdate = title.substring(title.lastIndexOf(' '), title.length);
-                datetime = moment(pubdate, 'YYYY年M月D日H点场').format('YYYY-MM-DD HH:mm:ss');
-            }
+            const pubdate = title.substring(title.lastIndexOf(' '), title.length);
+            datetime = moment(pubdate, 'YYYY年M月D日H点场').format('YYYY-MM-DD HH:mm:ss');
             console.log(`直播时间:${datetime}`);
 
             // 修正标题
-            if (authorId === 20) {
-                title = title.split('——')[0];
-            } else {
-                title = title.replaceAll('【直播回放】', '');
-                title = title.substring(0, title.lastIndexOf(' '));
-            }
+            title = title.replaceAll('【直播回放】', '');
+            title = title.substring(0, title.lastIndexOf(' '));
             console.log(`标题:${title}`);
 
             const cover = pic.substring(7);
