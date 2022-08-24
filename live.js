@@ -3,7 +3,7 @@ import moment from 'moment';
 import ZimuApi from './api/ZimuApi.js';
 import PushApi from './api/PushApi.js';
 
-const blacklist = [21];
+const blacklist = [8, 21];
 
 (async () => {
     const users = (await ZimuApi.findAllAuthors()).data.filter(user => !blacklist.includes(user.id));
