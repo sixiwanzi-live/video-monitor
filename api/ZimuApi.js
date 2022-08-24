@@ -58,4 +58,14 @@ export default class ZimuApi {
             await PushApi.push(`查找bv(${bv})的视频列表失败`, ex.response.data);
         }
     }
+
+    static async findAllAuthors() {
+        const url = `${config.zimu.url}/authors`;
+        try {
+            return await axios.get(url);
+        } catch (ex) {
+            console.log(ex);
+            await PushApi.push(`查找authors列表失败`, ex.response.data);
+        }
+    }
 }

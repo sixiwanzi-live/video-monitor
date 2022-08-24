@@ -3,39 +3,19 @@ import moment from 'moment';
 import ZimuApi from './api/ZimuApi.js';
 import PushApi from './api/PushApi.js';
 
-const users = [
-    {
-        id: 1,
-        uid: 1660392980
-    },
-    {
-        id: 2,
-        uid: 1900141897
-    },
-    {
-        id: 3,
-        uid: 1878154667
-    },
-    {
-        id: 4,
-        uid: 1217754423
-    },
-    {
-        id: 20, 
-        uid: 1265605287
-    }
-];
+const blacklist = [21];
 
 (async () => {
+    const users = (await ZimuApi.findAllAuthors()).data.filter(user => !blacklist.includes(user.id));
     const liveInfoUrl = `https://api.live.bilibili.com/room/v1/Room/get_status_info_by_uids?${users.map(user => `uids[]=${user.uid}`).join('&')}`;
     try {
         const res = await axios.get(liveInfoUrl);
         const data = res.data.data;
         users.forEach(async user => {
             const liveInfo      = data[user.uid];
-            const liveStatus    = parseInt(liveInfo.live_status);
+            const liveStatus    = liveInfo.live_status;
             // 非直播状态不考虑
-            if (liveStatus !== 0) {
+            if (liveStatus === 1) {
                 const clip = {
                     authorId:   user.id,
                     title:      liveInfo.title,
