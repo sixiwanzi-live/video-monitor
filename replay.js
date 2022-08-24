@@ -9,10 +9,15 @@ const archives = [
         mode: 1
     },
     {
+        url: 'https://api.bilibili.com/x/series/archives?mid=198297&series_id=210350&sort=desc&pn=1&ps=1',
+        mode: 1
+    },
+    {
         path: '四禧丸子',
         mode: 2
     }
 ];
+
 (async () => {
     for (let i = 0; i < archives.length; ++i) {
         const archive = archives[i];
@@ -63,7 +68,7 @@ const archives = [
                 }
                 
                 const downloadUrl = `https://sxwz-rec.com/d/${archive.path}/${file.name}`;
-                下载视频
+                // 下载视频
                 try {
                     await DiskApi.saveByUrl(downloadUrl);
                 } catch (ex) {
