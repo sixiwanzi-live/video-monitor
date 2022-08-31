@@ -20,7 +20,8 @@ const blacklist = [8, 21];
                     authorId:   user.id,
                     title:      liveInfo.title,
                     datetime:   moment(new Date(parseInt(liveInfo.live_time) * 1000)).format('YYYY-MM-DD HH:mm:ss'),
-                    cover:      liveInfo.cover_from_user.substring(8)
+                    cover:      liveInfo.cover_from_user.substring(8),
+                    type:       0
                 };
                 console.log(clip);
 
