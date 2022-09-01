@@ -118,7 +118,7 @@ const archives = [
                 continue;
             }
         } else if (archive.mode === 2) {
-            const url = `https://sxwz-rec.com/api/public/path`;
+            const url = `https://bili-rec.com/api/public/path`;
             const params = {
                 path: `/${archive.path}`,
                 password: '',
@@ -133,7 +133,7 @@ const archives = [
                     continue;
                 }
                 
-                const downloadUrl = `https://sxwz-rec.com/d/${archive.path}/${file.name}`;
+                const downloadUrl = `https://bili-rec.com/d/${archive.path}/${file.name}`;
                 // 下载视频
                 try {
                     await DiskApi.saveByUrl(downloadUrl);
