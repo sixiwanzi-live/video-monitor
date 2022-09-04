@@ -19,7 +19,7 @@ const archives = [
     },
     {
         // 冰糖
-        url: 'https://api.bilibili.com/x/series/archives?mid=198297&series_id=210350&sort=desc&pn=1&ps=1',
+        url: 'https://api.bilibili.com/x/polymer/space/seasons_archives_list?mid=71413901&season_id=309045&sort_reverse=false&page_num=1&page_size=1',
         mode: 1
     },
     {
@@ -53,8 +53,13 @@ const archives = [
         mode: 1
     },
     {
-        // 唐九夏
-        url: 'https://api.bilibili.com/x/series/archives?mid=1219196749&series_id=2065795&sort=desc&pn=1&ps=1',
+        // 唐九夏2D
+        url: 'https://api.bilibili.com/x/polymer/space/seasons_archives_list?mid=1981879400&season_id=613261&sort_reverse=true&page_num=1&page_size=1',
+        mode: 1
+    },
+    {
+        // 唐九夏3D
+        url: 'https://api.bilibili.com/x/polymer/space/seasons_archives_list?mid=1981879400&season_id=610698&sort_reverse=true&page_num=1&page_size=1',
         mode: 1
     },
     {
@@ -90,13 +95,8 @@ const archives = [
         if (archive.mode === 1) {
             let video = {};
             try {
-                if (archive.url.indexOf('search') !== -1) {
-                    const res = await axios.get(archive.url);  // 请求合集列表
-                    video = res.data.data.list.vlist[0];
-                } else if (archive.url.indexOf('series') !== -1) {
-                    const res = await axios.get(archive.url);  // 请求合集列表
-                    video = res.data.data.archives[0];
-                }
+                const res = await axios.get(archive.url);  // 请求合集列表
+                video = res.data.data.archives[0];
             } catch (ex) {
                 console.log(ex);
                 PushApi.push(`请求回放列表失败`, ex.response.data);
