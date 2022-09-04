@@ -86,6 +86,10 @@ const archives = [
         // 麻尤米
         url: 'https://api.bilibili.com/x/series/archives?mid=338283235&series_id=2505048&sort=desc&pn=1&ps=1',
         mode: 1
+    },
+    {
+        path: '凜凜蝶凜',
+        mode: 2
     }
 ];
 
