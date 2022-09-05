@@ -90,6 +90,10 @@ const archives = [
     {
         path: '凜凜蝶凜',
         mode: 2
+    },
+    {
+        path: 'ASOUL',
+        mode: 2
     }
 ];
 
