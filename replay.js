@@ -3,9 +3,34 @@ import PushApi from './api/PushApi.js';
 import DiskApi from './api/DiskApi.js';
 
 const archives = [
+    // {
+    //     path: '四禧丸子',
+    //     mode: 2
+    // },
     {
-        path: '四禧丸子',
-        mode: 2
+        // 恬豆
+        url: "https://api.bilibili.com/x/series/archives?mid=1563329562&series_id=2326892&sort=desc&pn=1&ps=1",
+        mode: 1
+    },
+    {
+        // 梨安
+        url: "https://api.bilibili.com/x/series/archives?mid=1563329562&series_id=2326869&sort=desc&pn=1&ps=1",
+        mode: 1
+    },
+    {
+        // 沐霂
+        url: 'https://api.bilibili.com/x/series/archives?mid=1563329562&series_id=2605708&sort=desc&pn=1&ps=1',
+        mode: 1
+    },
+    {
+        // 又一
+        url: 'https://api.bilibili.com/x/series/archives?mid=1563329562&series_id=2326888&sort=desc&pn=1&ps=1',
+        mode: 1
+    },
+    {
+        //四喜丸子
+        url: 'https://api.bilibili.com/x/series/archives?mid=1563329562&series_id=2328858&sort=desc&pn=1&ps=1',
+        mode: 1
     },
     {
         // 慕宇
@@ -114,7 +139,7 @@ const archives = [
             try {
                 // 下载视频
                 try {
-                    await DiskApi.saveByBv(video.bvid);
+                    // await DiskApi.saveByBv(video.bvid);
                 } catch (ex) {
                     console.log(ex);
                     PushApi.push(`下载"${title}"视频失败`, ex.response.data);
@@ -136,7 +161,7 @@ const archives = [
             try {
                 const res = await axios.post(url, params);
                 const file = res.data.data.files.filter(file => file.type === 3).at(0);
-                console.log(file);
+                console.log(file.name);
                 if (file.size <= 0) {
                     continue;
                 }
@@ -144,7 +169,7 @@ const archives = [
                 const downloadUrl = `https://bili-rec.com/d/${archive.path}/${file.name}`;
                 // 下载视频
                 try {
-                    await DiskApi.saveByUrl(downloadUrl);
+                    // await DiskApi.saveByUrl(downloadUrl);
                 } catch (ex) {
                     console.log(ex);
                     PushApi.push(`下载"${title}"视频失败`, ex.response.data);
