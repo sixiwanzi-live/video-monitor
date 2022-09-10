@@ -125,7 +125,7 @@ const archives = [
             try {
                 const res = await axios.post(url, params);
                 const file = res.data.data.files.filter(file => file.type === 3).at(0);
-                console.log(file.name);
+                console.log(file);
                 if (file.size <= 0) {
                     continue;
                 }
