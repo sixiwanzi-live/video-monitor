@@ -120,13 +120,12 @@ const archives = [
                 path: `/${archive.path}`,
                 password: '',
                 page_num: 1,
-                page_size: 2
+                page_size: 10
             };
             try {
                 const res = await axios.post(url, params);
                 const file = res.data.data.files.filter(file => file.type === 3).at(0);
                 console.log(file);
-                console.log(file.size);
                 if (file.size <= 0) {
                     continue;
                 }
