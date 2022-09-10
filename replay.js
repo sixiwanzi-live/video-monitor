@@ -120,7 +120,7 @@ const archives = [
                 path: `/${archive.path}`,
                 password: '',
                 page_num: 1,
-                page_size: 1
+                page_size: 2
             };
             try {
                 const res = await axios.post(url, params);
