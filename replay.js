@@ -33,48 +33,8 @@ const archives = [
         mode: 1
     },
     {
-        // 慕宇
-        url: 'https://api.bilibili.com/x/series/archives?mid=1230039261&series_id=2223855&sort=desc&pn=1&ps=1',
-        mode: 1
-    },
-    {
-        // 楚风
-        url: 'https://api.bilibili.com/x/series/archives?mid=1757836012&series_id=2202072&sort=desc&pn=1&ps=1',
-        mode: 1
-    },
-    {
         // 冰糖
         url: 'https://api.bilibili.com/x/polymer/space/seasons_archives_list?mid=71413901&season_id=309045&sort_reverse=false&page_num=1&page_size=1',
-        mode: 1
-    },
-    {
-        // 莞儿
-        url: 'https://api.bilibili.com/x/series/archives?mid=1875044092&series_id=2508539&sort=desc&pn=1&ps=1',
-        mode: 1
-    },
-    {
-        // 露早
-        url: 'https://api.bilibili.com/x/series/archives?mid=1669777785&series_id=2519501&sort=desc&pn=1&ps=1',
-        mode: 1
-    },
-    {
-        // 米诺
-        url: 'https://api.bilibili.com/x/series/archives?mid=1778026586&series_id=2513879&sort=desc&pn=1&ps=1',
-        mode: 1
-    },
-    {
-        // 柚恩
-        url: 'https://api.bilibili.com/x/series/archives?mid=1795147802&series_id=2516609&sort=desc&pn=1&ps=1',
-        mode: 1
-    },
-    {
-        // 虞莫
-        url: 'https://api.bilibili.com/x/series/archives?mid=1811071010&series_id=2522257&sort=desc&pn=1&ps=1',
-        mode: 1
-    },
-    {
-        // 明前奶绿
-        url: 'https://api.bilibili.com/x/series/archives?mid=2132180406&series_id=2484684&sort=desc&pn=1&ps=1',
         mode: 1
     },
     {
@@ -98,16 +58,6 @@ const archives = [
         mode: 1
     },
     {
-        // 翔太
-        url: 'https://api.bilibili.com/x/series/archives?mid=1461176910&series_id=2208174&sort=desc&pn=1&ps=1',
-        mode: 1
-    },
-    {
-        // 泽一
-        url: 'https://api.bilibili.com/x/series/archives?mid=1535525542&series_id=2205073&sort=desc&pn=1&ps=1',
-        mode: 1
-    },
-    {
         // 麻尤米
         url: 'https://api.bilibili.com/x/series/archives?mid=338283235&series_id=2505048&sort=desc&pn=1&ps=1',
         mode: 1
@@ -119,6 +69,18 @@ const archives = [
     {
         path: 'ASOUL',
         mode: 2
+    },
+    {
+        path: 'EOE组合',
+        mode: 2
+    },
+    {
+        path: '量子少年',
+        mode: 2
+    },
+    {
+        path: '明前奶绿',
+        mode: 2
     }
 ];
 
@@ -126,6 +88,7 @@ const archives = [
     for (let i = 0; i < archives.length; ++i) {
         const archive = archives[i];
         if (archive.mode === 1) {
+            // 获取B站源
             let video = {};
             try {
                 const res = await axios.get(archive.url);  // 请求合集列表
@@ -151,12 +114,13 @@ const archives = [
                 continue;
             }
         } else if (archive.mode === 2) {
+            // 获取录播站源
             const url = `https://bili-rec.com/api/public/path`;
             const params = {
                 path: `/${archive.path}`,
                 password: '',
                 page_num: 1,
-                page_size: 1000
+                page_size: 1
             };
             try {
                 const res = await axios.post(url, params);
