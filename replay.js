@@ -3,10 +3,6 @@ import PushApi from './api/PushApi.js';
 import DiskApi from './api/DiskApi.js';
 
 const archives = [
-    // {
-    //     path: '四禧丸子',
-    //     mode: 2
-    // },
     {
         // 恬豆
         url: "https://api.bilibili.com/x/series/archives?mid=1563329562&series_id=2326892&sort=desc&pn=1&ps=1",
@@ -55,11 +51,6 @@ const archives = [
     {
         // 卡缇娅
         url: 'https://api.bilibili.com/x/series/archives?mid=1011797664&series_id=2302706&sort=desc&pn=1&ps=1',
-        mode: 1
-    },
-    {
-        // 麻尤米
-        url: 'https://api.bilibili.com/x/series/archives?mid=338283235&series_id=2505048&sort=desc&pn=1&ps=1',
         mode: 1
     },
     {
