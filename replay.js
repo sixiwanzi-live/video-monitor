@@ -4,31 +4,6 @@ import DiskApi from './api/DiskApi.js';
 
 const archives = [
     {
-        // 恬豆
-        url: "https://api.bilibili.com/x/series/archives?mid=1563329562&series_id=2326892&sort=desc&pn=1&ps=1",
-        mode: 1
-    },
-    {
-        // 梨安
-        url: "https://api.bilibili.com/x/series/archives?mid=1563329562&series_id=2326869&sort=desc&pn=1&ps=1",
-        mode: 1
-    },
-    {
-        // 沐霂
-        url: 'https://api.bilibili.com/x/series/archives?mid=1563329562&series_id=2605708&sort=desc&pn=1&ps=1',
-        mode: 1
-    },
-    {
-        // 又一
-        url: 'https://api.bilibili.com/x/series/archives?mid=1563329562&series_id=2326888&sort=desc&pn=1&ps=1',
-        mode: 1
-    },
-    {
-        //四喜丸子
-        url: 'https://api.bilibili.com/x/series/archives?mid=1563329562&series_id=2328858&sort=desc&pn=1&ps=1',
-        mode: 1
-    },
-    {
         // 冰糖
         url: 'https://api.bilibili.com/x/polymer/space/seasons_archives_list?mid=71413901&season_id=309045&sort_reverse=false&page_num=1&page_size=1',
         mode: 1
@@ -44,14 +19,12 @@ const archives = [
         mode: 1
     },
     {
-        // kino
-        url: 'https://api.bilibili.com/x/series/archives?mid=1383815813&series_id=2060096&sort=desc&pn=1&ps=1',
-        mode: 1
+        path: '星律动',
+        mode: 2
     },
     {
-        // 卡缇娅
-        url: 'https://api.bilibili.com/x/series/archives?mid=1011797664&series_id=2302706&sort=desc&pn=1&ps=1',
-        mode: 1
+        path: '四禧丸子',
+        mode: 2
     },
     {
         path: '凜凜蝶凜',
@@ -71,6 +44,10 @@ const archives = [
     },
     {
         path: '明前奶绿',
+        mode: 2
+    },
+    {
+        path: '麻尤米mayumi',
         mode: 2
     }
 ];
@@ -106,21 +83,18 @@ const archives = [
             }
         } else if (archive.mode === 2) {
             // 获取录播站源
-            const url = `https://bili-rec.com/api/public/path`;
+            const url = 'https://bili-rec.com/api/fs/list';
             const params = {
-                path: `/${archive.path}`,
+                page: 1,
                 password: '',
-                page_num: 1,
-                page_size: 10
+                path: `/${archive.path}`,
+                per_page: 10,
+                refresh: false
             };
             try {
                 const res = await axios.post(url, params);
-                const file = res.data.data.files.filter(file => file.type === 3).at(0);
-                console.log(file);
-                if (file.size <= 0) {
-                    continue;
-                }
-                
+                const file = res.data.data.content.filter(file => !file.is_dir && file.type === 2 && file.size > 0).at(0);
+                console.log(file);     
                 const downloadUrl = `https://bili-rec.com/d/${archive.path}/${file.name}`;
                 // 下载视频
                 try {
