@@ -9,13 +9,8 @@ const archives = [
         mode: 1
     },
     {
-        // 唐九夏2D
-        url: 'https://api.bilibili.com/x/polymer/space/seasons_archives_list?mid=1981879400&season_id=613261&sort_reverse=true&page_num=1&page_size=1',
-        mode: 1
-    },
-    {
-        // 唐九夏3D
-        url: 'https://api.bilibili.com/x/polymer/space/seasons_archives_list?mid=1981879400&season_id=610698&sort_reverse=true&page_num=1&page_size=1',
+        // 唐九夏
+        url: 'https://api.bilibili.com/x/series/archives?mid=1981879400&series_id=410493&only_normal=true&sort=desc&pn=1&ps=30',
         mode: 1
     },
     {
