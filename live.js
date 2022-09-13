@@ -22,12 +22,16 @@ dirMap.set(13, 'EOE组合');
 dirMap.set(14, '明前奶绿');
 dirMap.set(16, '星律动');
 dirMap.set(17, '星律动');
-dirMap.set(20, '凜凜蝶凜');
-dirMap.set(21, '麻尤米mayumi');
+dirMap.set(20, '麻尤米mayumi');
+dirMap.set(21, '凜凜蝶凜');
 dirMap.set(22, 'ASOUL');
 dirMap.set(23, 'ASOUL');
 dirMap.set(24, 'ASOUL');
 dirMap.set(25, 'ASOUL');
+
+const prefixSet = new Set();
+prefixSet.add(20);
+prefixSet.add(21);
 
 (async () => {
     const users = (await ZimuApi.findAllAuthors()).data.filter(user => !blacklist.includes(user.id));
@@ -39,20 +43,27 @@ dirMap.set(25, 'ASOUL');
             const user = users[i];
             const liveInfo      = data[user.uid];
             const liveStatus    = liveInfo.live_status;
+            const liveTime      = moment(new Date(parseInt(liveInfo.live_time) * 1000));
             if (liveStatus !== 1) {
                 continue;
             }
+
             const clip = {
                 authorId:   user.id,
                 title:      liveInfo.title,
-                datetime:   moment(new Date(parseInt(liveInfo.live_time) * 1000)).format('YYYY-MM-DD HH:mm:ss'),
+                datetime:   liveTime.format('YYYY-MM-DD HH:mm:ss'),
                 cover:      liveInfo.cover_from_user.substring(8),
                 type:       0
             };
             if (dirMap.has(user.id)) {
                 clip.type = 2;
-                clip.playUrl = `bili-rec.com/d/${dirMap.get(user.id)}/${moment().format('YYYYMMDD')}-${user.name}-${clip.title}.mp4`;
-                clip.redirectUrl = `bili-rec.com/${dirMap.get(user.id)}/${moment().format('YYYYMMDD')}-${user.name}-${clip.title}.mp4`;
+                if (prefixSet.has(user.id)) {
+                    clip.playUrl = `bili-rec.com/d/${dirMap.get(user.id)}/${liveTime.format('YYYYMMDD-HHmmss')}-${user.name}-${clip.title}.mp4`;
+                    clip.redirectUrl = `bili-rec.com/${dirMap.get(user.id)}/${liveTime.format('YYYYMMDD-HHmmss')}-${user.name}-${clip.title}.mp4`;
+                } else {
+                    clip.playUrl = `bili-rec.com/d/${dirMap.get(user.id)}/${liveTime.format('YYYYMMDD')}-${user.name}-${clip.title}.mp4`;
+                    clip.redirectUrl = `bili-rec.com/${dirMap.get(user.id)}/${liveTime.format('YYYYMMDD')}-${user.name}-${clip.title}.mp4`;    
+                }
             }
             console.log(clip);
 
@@ -62,8 +73,8 @@ dirMap.set(25, 'ASOUL');
                 console.log(`new:${clip.datetime}, latest:${res1.data.datetime}`);
                 if (res1.data.datetime !== clip.datetime) {
                     console.log('允许上传');
-                    await ZimuApi.insertClip(clip);
-                    await PushApi.push(`Author(${clip.authorId}开播了)`, clip.title);
+                    // await ZimuApi.insertClip(clip);
+                    // await PushApi.push(`Author(${clip.authorId}开播了)`, clip.title);
                 } else {
                     console.log('重复');
                 }
