@@ -73,8 +73,8 @@ prefixSet.add(21);
                 console.log(`new:${clip.datetime}, latest:${res1.data.datetime}`);
                 if (res1.data.datetime !== clip.datetime) {
                     console.log('允许上传');
-                    // await ZimuApi.insertClip(clip);
-                    // await PushApi.push(`Author(${clip.authorId}开播了)`, clip.title);
+                    await ZimuApi.insertClip(clip);
+                    await PushApi.push(`Author(${clip.authorId}开播了)`, clip.title);
                 } else {
                     console.log('重复');
                 }
