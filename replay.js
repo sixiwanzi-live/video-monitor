@@ -5,12 +5,7 @@ import DiskApi from './api/DiskApi.js';
 const archives = [
     {
         // 冰糖
-        url: 'https://api.bilibili.com/x/polymer/space/seasons_archives_list?mid=71413901&season_id=309045&sort_reverse=false&page_num=1&page_size=1',
-        mode: 1
-    },
-    {
-        // 唐九夏
-        url: 'https://api.bilibili.com/x/series/archives?mid=1981879400&series_id=410493&only_normal=true&sort=desc&pn=1&ps=30',
+        url: 'https://api.bilibili.com/x/series/archives?mid=198297&series_id=210350&only_normal=true&sort=desc&pn=1&ps=1',
         mode: 1
     },
     {
@@ -90,7 +85,7 @@ const archives = [
                 const res = await axios.post(url, params);
                 const file = res.data.data.content.filter(file => !file.is_dir && file.type === 2 && file.size > 0).at(0);
                 console.log(file);     
-                const downloadUrl = `https://bili-rec.com/d/${archive.path}/${file.name}`;
+                const downloadUrl = `https://r.zimu.live/d/${archive.path}/${file.name}`;
                 // 下载视频
                 try {
                     await DiskApi.saveByUrl(downloadUrl);

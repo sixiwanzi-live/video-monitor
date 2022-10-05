@@ -20,6 +20,7 @@ dirMap.set(11, 'EOE组合');
 dirMap.set(12, 'EOE组合');
 dirMap.set(13, 'EOE组合');
 dirMap.set(14, '明前奶绿');
+dirMap.set(15, '星律动');
 dirMap.set(16, '星律动');
 dirMap.set(17, '星律动');
 dirMap.set(20, '麻尤米mayumi');
@@ -58,11 +59,11 @@ prefixSet.add(21);
             if (dirMap.has(user.id)) {
                 clip.type = 2;
                 if (prefixSet.has(user.id)) {
-                    clip.playUrl = `bili-rec.com/d/${dirMap.get(user.id)}/${liveTime.format('YYYYMMDD-HHmmss')}-${user.name}-${clip.title}.mp4`;
-                    clip.redirectUrl = `bili-rec.com/${dirMap.get(user.id)}/${liveTime.format('YYYYMMDD-HHmmss')}-${user.name}-${clip.title}.mp4`;
+                    clip.playUrl = `r.zimu.live/d/${dirMap.get(user.id)}/${liveTime.format('YYYYMMDD-HHmmss')}-${user.name}-${clip.title}.mp4`;
+                    clip.redirectUrl = `r.zimu.live/${dirMap.get(user.id)}/${liveTime.format('YYYYMMDD-HHmmss')}-${user.name}-${clip.title}.mp4`;
                 } else {
-                    clip.playUrl = `bili-rec.com/d/${dirMap.get(user.id)}/${liveTime.format('YYYYMMDD')}-${user.name}-${clip.title}.mp4`;
-                    clip.redirectUrl = `bili-rec.com/${dirMap.get(user.id)}/${liveTime.format('YYYYMMDD')}-${user.name}-${clip.title}.mp4`;    
+                    clip.playUrl = `r.zimu.live/d/${dirMap.get(user.id)}/${liveTime.format('YYYYMMDD')}-${user.name}-${clip.title}.mp4`;
+                    clip.redirectUrl = `r.zimu.live/${dirMap.get(user.id)}/${liveTime.format('YYYYMMDD')}-${user.name}-${clip.title}.mp4`;    
                 }
             }
             console.log(clip);
