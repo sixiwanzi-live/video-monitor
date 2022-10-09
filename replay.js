@@ -73,7 +73,7 @@ const archives = [
             }
         } else if (archive.mode === 2) {
             // 获取录播站源
-            const url = 'https://bili-rec.com/api/fs/list';
+            const url = 'https://bili.lubo.media/api/fs/list';
             const params = {
                 page: 1,
                 password: '',
@@ -85,7 +85,7 @@ const archives = [
                 const res = await axios.post(url, params);
                 const file = res.data.data.content.filter(file => !file.is_dir && file.type === 2 && file.size > 0).at(0);
                 console.log(file);     
-                const downloadUrl = `https://r.zimu.live/d/${archive.path}/${file.name}`;
+                const downloadUrl = `https://bili.lubo.media/d/${archive.path}/${file.name}`;
                 // 下载视频
                 try {
                     await DiskApi.saveByUrl(downloadUrl);
