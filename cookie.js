@@ -52,6 +52,7 @@ const toTime = (time) => {
                 if (err) {
                     rej(err);
                 } else {
+                    console.log(stderr);
                     if (stderr.indexOf('1920x1080') === -1) {
                         await PushApi.push(`cookies失效(${clipId}), startTime=${toTime(startTime)}, endTime=${toTime(endTime)}`, '');
                     }
