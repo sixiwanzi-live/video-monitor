@@ -1,4 +1,5 @@
 import axios from 'axios';
+import fetch from 'node-fetch';
 import config from '../config.js';
 import PushApi from './PushApi.js';
 
@@ -67,5 +68,10 @@ export default class ZimuApi {
             console.log(ex);
             await PushApi.push(`查找authors列表失败`, ex.response.data);
         }
+    }
+
+    static async segment(clipId, startTime, endTime) {
+        const url = `${config.zimu.url}/clips/${clipId}/segment?startTime=${startTime}&endTime=${endTime}`;
+        return await fetch(url);
     }
 }
