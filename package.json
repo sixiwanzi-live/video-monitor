@@ -19,6 +19,7 @@
   "homepage": "https://github.com/sixiwanzi-live/video-monitor#readme",
   "dependencies": {
     "axios": "^0.27.2",
-    "moment": "^2.29.4"
+    "moment": "^2.29.4",
+    "node-fetch": "^3.2.10"
   }
 }
