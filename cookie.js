@@ -56,6 +56,7 @@ const toTime = (time) => {
             });
             p.stderr.on('data', async (data) => {
                 const r = data.toString();
+                console.log(r);
                 if (-1 === r.indexOf('1920x1080')) {
                     await PushApi.push(`cookies失效(${clipId}), startTime=${toTime(startTime)}, endTime=${toTime(endTime)}`, '');
                 }
