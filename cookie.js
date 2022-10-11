@@ -70,5 +70,5 @@ const toTime = (time) => {
     } catch (ex) {
         await PushApi.push(`cookies分析切片失败(${clipId}), startTime=${toTime(startTime)}, endTime=${toTime(endTime)}`, ex);
     }
-    await unlink(file.path);
+    // await unlink(file.path);
 })()
