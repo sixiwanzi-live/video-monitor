@@ -1,10 +1,11 @@
 import fs from 'fs';
 import { unlink } from 'fs/promises';
-import { spawn } from 'child_process';
+import { exec, spawn } from 'child_process';
 import fetch from "node-fetch";
 import ZimuApi from "./api/ZimuApi.js";
 import PushApi from './api/PushApi.js';
 import config from './config.js';
+import { stderr } from 'process';
 
 const toTime = (time) => {
     const ss = time % 60;
@@ -47,29 +48,19 @@ const toTime = (time) => {
     }
     try {
         await new Promise((res, rej) => {
-            let cmd = [
-                file.path
-            ];
-            let p = spawn('ffprobe', cmd);
-            p.stdout.on('data', (data) => {
-                
-            });
-            p.stderr.on('data', async (data) => {
-                const r = data.toString();
-                console.log(r);
-                if (-1 === r.indexOf('1920x1080')) {
-                    await PushApi.push(`cookies失效(${clipId}), startTime=${toTime(startTime)}, endTime=${toTime(endTime)}`, '');
+            exec(`ffprobe ${file.path}`, async (err, stdout, stderr) => {
+                if (err) {
+                    rej(err);
+                } else {
+                    if (stderr.indexOf('1920x1080') === -1) {
+                        await PushApi.push(`cookies失效(${clipId}), startTime=${toTime(startTime)}, endTime=${toTime(endTime)}`, '');
+                    }
+                    res();
                 }
-            });
-            p.on('close', (code) => {
-                res();
-            });
-            p.on('error', (error) => {
-                rej(error);
             });
         });
     } catch (ex) {
         await PushApi.push(`cookies分析切片失败(${clipId}), startTime=${toTime(startTime)}, endTime=${toTime(endTime)}`, ex);
     }
-    // await unlink(file.path);
+    await unlink(file.path);
 })()
