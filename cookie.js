@@ -48,7 +48,7 @@ const toTime = (time) => {
     }
     try {
         await new Promise((res, rej) => {
-            exec(`ffprobe ${file.path}`, async (err, stdout, stderr) => {
+            exec(`/usr/local/bin/ffprobe ${file.path}`, async (err, stdout, stderr) => {
                 if (err) {
                     rej(err);
                 } else {
