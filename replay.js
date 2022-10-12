@@ -17,7 +17,7 @@ const archives = [
         mode: 2
     },
     {
-        path: '凜凜蝶凜',
+        path: 'sp9/凜凜蝶凜',
         mode: 2
     },
     {
@@ -33,11 +33,11 @@ const archives = [
         mode: 2
     },
     {
-        path: '明前奶绿',
+        path: 'sp9/明前奶绿',
         mode: 2
     },
     {
-        path: '麻尤米mayumi',
+        path: 'sp7/麻尤米mayumi',
         mode: 2
     }
 ];
