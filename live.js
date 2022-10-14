@@ -6,10 +6,10 @@ import PushApi from './api/PushApi.js';
 const blacklist = [8];
 
 const dirMap = new Map();
-dirMap.set(1, '四禧丸子');
-dirMap.set(2, '四禧丸子');
-dirMap.set(3, '四禧丸子');
-dirMap.set(4, '四禧丸子');
+dirMap.set(1, `四禧丸子/${moment().format('YYYY.MM')}`);
+dirMap.set(2, `四禧丸子/${moment().format('YYYY.MM')}`);
+dirMap.set(3, `四禧丸子/${moment().format('YYYY.MM')}`);
+dirMap.set(4, `四禧丸子/${moment().format('YYYY.MM')}`);
 dirMap.set(5, '量子少年');
 dirMap.set(6, '量子少年');
 dirMap.set(18, '量子少年');
