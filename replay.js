@@ -1,4 +1,5 @@
 import axios from 'axios';
+import moment from 'moment';
 import PushApi from './api/PushApi.js';
 import DiskApi from './api/DiskApi.js';
 
@@ -13,7 +14,7 @@ const archives = [
         mode: 2
     },
     {
-        path: '四禧丸子',
+        path: `四禧丸子/${moment().format('YYYY.MM')}`,
         mode: 2
     },
     {
