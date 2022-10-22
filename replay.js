@@ -38,7 +38,7 @@ const archives = [
         mode: 2
     },
     {
-        path: 'sp7/麻尤米mayumi',
+        path: `sp7/麻尤米mayumi/${moment().format('YYYY.MM')}`,
         mode: 2
     }
 ];
@@ -79,7 +79,7 @@ const archives = [
                 page: 1,
                 password: '',
                 path: `/${archive.path}`,
-                per_page: 90,
+                per_page: 10,
                 refresh: false
             };
             try {
