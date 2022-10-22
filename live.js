@@ -25,10 +25,10 @@ dirMap.set(16, '星律动');
 dirMap.set(17, '星律动');
 dirMap.set(20, `sp7/麻尤米mayumi/${moment().format('YYYY.MM')}`);
 dirMap.set(21, 'sp9/凜凜蝶凜');
-dirMap.set(22, 'ASOUL');
-dirMap.set(23, 'ASOUL');
-dirMap.set(24, 'ASOUL');
-dirMap.set(25, 'ASOUL');
+dirMap.set(22, `ASOUL/${moment().format('YYYY.MM')}`);
+dirMap.set(23, `ASOUL/${moment().format('YYYY.MM')}`);
+dirMap.set(24, `ASOUL/${moment().format('YYYY.MM')}`);
+dirMap.set(25, `ASOUL/${moment().format('YYYY.MM')}`);
 
 const prefixSet = new Set();
 prefixSet.add(20);

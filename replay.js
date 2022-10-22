@@ -22,7 +22,7 @@ const archives = [
         mode: 2
     },
     {
-        path: 'ASOUL',
+        path: `ASOUL/${moment().format('YYYY.MM')}`,
         mode: 2
     },
     {
@@ -79,7 +79,7 @@ const archives = [
                 page: 1,
                 password: '',
                 path: `/${archive.path}`,
-                per_page: 30,
+                per_page: 20,
                 refresh: false
             };
             try {
