@@ -23,7 +23,7 @@ dirMap.set(14, 'sp9/明前奶绿');
 dirMap.set(15, '星律动');
 dirMap.set(16, '星律动');
 dirMap.set(17, '星律动');
-dirMap.set(20, 'sp7/麻尤米mayumi');
+dirMap.set(20, `sp7/麻尤米mayumi/${moment().format('YYYY.MM')}`);
 dirMap.set(21, 'sp9/凜凜蝶凜');
 dirMap.set(22, 'ASOUL');
 dirMap.set(23, 'ASOUL');
