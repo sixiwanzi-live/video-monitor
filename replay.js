@@ -18,7 +18,7 @@ const archives = [
         mode: 2
     },
     {
-        path: 'sp9/凜凜蝶凜',
+        path: `sp9/凜凜蝶凜/${moment().format('YYYY.MM')}`,
         mode: 2
     },
     {
@@ -26,15 +26,15 @@ const archives = [
         mode: 2
     },
     {
-        path: 'EOE组合',
+        path: `EOE组合/${moment().format('YYYY.MM')}`,
         mode: 2
     },
     {
-        path: '量子少年',
+        path: `量子少年/${moment().format('YYYY.MM')}`,
         mode: 2
     },
     {
-        path: 'sp9/明前奶绿',
+        path: `sp9/明前奶绿/${moment().format('YYYY.MM')}`,
         mode: 2
     },
     {
