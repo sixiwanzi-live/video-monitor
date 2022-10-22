@@ -79,7 +79,7 @@ const archives = [
                 page: 1,
                 password: '',
                 path: `/${archive.path}`,
-                per_page: 10,
+                per_page: 30,
                 refresh: false
             };
             try {
@@ -89,13 +89,13 @@ const archives = [
                 console.log(file);     
                 const downloadUrl = `https://bili.lubo.media/d/${archive.path}/${file.name}`;
                 // 下载视频
-                try {
-                    await DiskApi.saveByUrl(downloadUrl);
-                } catch (ex) {
-                    console.log(ex);
-                    PushApi.push(`下载"${title}"视频失败`, ex.response.data);
-                    continue;
-                }
+                // try {
+                //     await DiskApi.saveByUrl(downloadUrl);
+                // } catch (ex) {
+                //     console.log(ex);
+                //     PushApi.push(`下载"${title}"视频失败`, ex.response.data);
+                //     continue;
+                // }
             } catch (ex) {
                 console.log(ex);
                 PushApi.push(`请求回放列表失败`, ex.response.data);
