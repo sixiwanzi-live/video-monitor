@@ -10,7 +10,7 @@ const archives = [
         mode: 1
     },
     {
-        path: '星律动',
+        path: `星律动/${moment().format('YYYY.MM')}`,
         mode: 2
     },
     {
