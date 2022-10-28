@@ -40,7 +40,7 @@ import {spawn} from 'child_process';
                 console.log('stderr: ' + data.toString());
             });
             p.on('close', (code) => {
-                console.log(`转码结束:${dst}, code:${code}`);
+                console.log(`转码结束:${m3u8}, code:${code}`);
                 res();
             });
             p.on('error', (error) => {
