@@ -12,7 +12,12 @@ import {spawn} from 'child_process';
         const mp4 = `${path}/${file}`;
         // 创建文件夹
         const dir = mp4.replace('.mp4', '');
-        await mkdir(dir);
+        try {
+            await mkdir(dir);
+        } catch (ex) {
+            console.log(ex);
+        }
+        
         console.log(`create dir ${dir}`);
         const m3u8 = `${dir}/index.m3u8`;
         console.log(`create m3u8 ${m3u8}`);
