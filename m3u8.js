@@ -16,5 +16,32 @@ import {spawn} from 'child_process';
         console.log(`create dir ${dir}`);
         const m3u8 = `${dir}/index.m3u8`;
         console.log(`create m3u8 ${m3u8}`);
+
+        await new Promise((res, rej) => {
+            let cmd = [
+                '-i', mp4,
+                '-c', 'copy',
+                '-start_number', '0',
+                '-hls_time', '10',
+                '-hls_list_size', '0',
+                '-f', 'hls',
+                m3u8
+            ];
+            let p = spawn('ffmpeg', cmd);
+            p.stdout.on('data', (data) => {
+                ctx.logger.info('stdout: ' + data.toString());
+            });
+            p.stderr.on('data', (data) => {
+                ctx.logger.info('stderr: ' + data.toString());
+            });
+            p.on('close', (code) => {
+                ctx.logger.info(`转码结束:${dst}, code:${code}`);
+                res();
+            });
+            p.on('error', (error) => {
+                ctx.logger.error(`错误码:${error}`);
+                rej(error);
+            });
+        });
     }
 })();
