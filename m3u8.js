@@ -34,17 +34,17 @@ import {spawn} from 'child_process';
             ];
             let p = spawn('ffmpeg', cmd);
             p.stdout.on('data', (data) => {
-                ctx.logger.info('stdout: ' + data.toString());
+                console.log('stdout: ' + data.toString());
             });
             p.stderr.on('data', (data) => {
-                ctx.logger.info('stderr: ' + data.toString());
+                console.log('stderr: ' + data.toString());
             });
             p.on('close', (code) => {
-                ctx.logger.info(`转码结束:${dst}, code:${code}`);
+                console.log(`转码结束:${dst}, code:${code}`);
                 res();
             });
             p.on('error', (error) => {
-                ctx.logger.error(`错误码:${error}`);
+                console.error(`错误码:${error}`);
                 rej(error);
             });
         });
