@@ -2,7 +2,7 @@ import { readdir, mkdir } from 'fs/promises';
 import {spawn} from 'child_process';
 
 (async () => {
-    const path = '/mnt/data0/5/露早GOGO/2022-10';
+    const path = '/mnt/data/5/莞儿睡不醒/2022-10';
     const files = await readdir(path);
     for (let i = 0; i < files.length; ++i) {
         const file = files[i];

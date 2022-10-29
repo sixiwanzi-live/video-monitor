@@ -6,9 +6,8 @@ import ZimuApi from './api/ZimuApi.js';
 import DiskApi from './api/DiskApi.js';
 
 (async () => {
-    const authorId = 26;
     try {
-        const res1 = await axios.get('https://api.bilibili.com/x/series/archives?mid=351609538&series_id=222746&only_normal=true&sort=desc&pn=1&ps=300');  // 请求合集列表
+        const res1 = await axios.get('https://api.bilibili.com/x/series/archives?mid=672342685&series_id=222754&only_normal=true&sort=desc&pn=1&ps=300');  // 请求合集列表
         const archives = res1.data.data.archives;
         for (let i = 0; i < archives.length; ++i) {
             const archive = archives[i];
@@ -31,26 +30,20 @@ import DiskApi from './api/DiskApi.js';
             const cover = pic.substring(7);
             console.log(`封面:${cover}`);
 
-            // 新增clip
             try {
-                const res2 = await ZimuApi.insertClip({
-                    authorId: authorId,
-                    title: title,
-                    datetime: datetime,
-                    type: 0,
-                    cover: cover
-                });
-                PushApi.push(`新增"${title}"clip成功`, `authorId:${authorId},title:${title},datetime:${datetime},bv:${bvid}`);
+                // 下载视频
+                try {
+                    await DiskApi.saveByBv(bvid);
+                } catch (ex) {
+                    console.log(ex);
+                    PushApi.push(`下载"${title}"视频失败`, ex.response.data);
+                    continue;
+                }
             } catch (ex) {
-                console.log(ex.response.data);
-                PushApi.push(`新增"${title}"clip失败`, ex.response.data);
+                console.log(ex);
+                PushApi.push(`查询bv(${video.bvid})的clip失败`, ex.response.data);
                 continue;
             }
-            await new Promise((res, rej) => {
-                setTimeout(() => {
-                    res();
-                }, 1000);
-            });
         }
     } catch (ex) {
         console.log(ex.response.data);
