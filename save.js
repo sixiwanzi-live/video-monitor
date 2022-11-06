@@ -2,7 +2,7 @@ import axios from 'axios';
 import { spawn } from 'child_process';
 
 (async () => {
-    const path = '四禧丸子/2022.06';
+    const path = '四禧丸子/2022.05';
     // 获取录播站源
     const url = 'https://bili.lubo.media/api/fs/list';
     const params = {
