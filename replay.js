@@ -1,4 +1,4 @@
-import axios from 'axios';
+import fetch from 'node-fetch';
 import moment from 'moment';
 import PushApi from './api/PushApi.js';
 import DiskApi from './api/DiskApi.js';
@@ -36,10 +36,6 @@ const archives = [
     {
         path: `sp9/明前奶绿/${moment().format('YYYY.MM')}`,
         mode: 2
-    },
-    {
-        path: `sp7/麻尤米mayumi/${moment().format('YYYY.MM')}`,
-        mode: 2
     }
 ];
 
@@ -50,8 +46,9 @@ const archives = [
             // 获取B站源
             let video = {};
             try {
-                const res = await axios.get(archive.url);  // 请求合集列表
-                video = res.data.data.archives[0];
+                const res = await fetch(archive.url);  // 请求合集列表
+                const json = await res.json();
+                video = json.data.archives[0];
             } catch (ex) {
                 console.log(ex);
                 PushApi.push(`请求回放列表失败`, ex.response.data);
@@ -73,28 +70,44 @@ const archives = [
                 continue;
             }
         } else if (archive.mode === 2) {
+            // 需要下载今天和昨天的视频
+            const today = moment().format('YYYYMMDD');
+            const yesterday = moment().subtract(1, 'days').format('YYYYMMDD');
             // 获取录播站源
             const url = 'https://bili.lubo.media/api/fs/list';
             const params = {
                 page: 1,
                 password: '',
                 path: `/${archive.path}`,
-                per_page: 20,
+                per_page: 10,
                 refresh: false
             };
             try {
                 console.log(params);
-                const res = await axios.post(url, params);
-                const file = res.data.data.content.filter(file => !file.is_dir && file.type === 2 && file.size > 0).at(0);
-                console.log(file);     
-                const downloadUrl = `https://bili.lubo.media/d/${archive.path}/${file.name}`;
-                // 下载视频
-                try {
-                    await DiskApi.saveByUrl(downloadUrl);
-                } catch (ex) {
-                    console.log(ex);
-                    PushApi.push(`下载"${title}"视频失败`, ex.response.data);
-                    continue;
+                const res = await fetch(url, {
+                    method: 'post',
+                    body: JSON.stringify(params),
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                });
+                const json = await res.json();
+                const files = json.data.content.filter(file => !file.is_dir && file.type === 2 && file.size > 0);
+                for (let i = 0; i < files.length; ++i) {
+                    const file = files[i];
+                    if (!file.name.startsWith(today) && !file.name.startsWith(yesterday)) {
+                        continue;
+                    }
+                    console.log(file);     
+                    const downloadUrl = `https://bili.lubo.media/d/${archive.path}/${file.name}`;
+                    // 下载视频
+                    try {
+                        await DiskApi.saveByUrl(downloadUrl);
+                    } catch (ex) {
+                        console.log(ex);
+                        PushApi.push(`下载"${title}"视频失败`, ex.response.data);
+                        continue;
+                    }
                 }
             } catch (ex) {
                 console.log(ex);
