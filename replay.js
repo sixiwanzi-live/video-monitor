@@ -152,9 +152,11 @@ const archives = [
                             ];
                             let p = spawn('wget', cmd);
                             p.stdout.on('data', (data) => {
+                                data.toString();
                                 // console.log('stdout: ' + data.toString());
                             });
                             p.stderr.on('data', (data) => {
+                                data.toString();
                                 // console.log('stderr: ' + data.toString());
                             });
                             p.on('close', (code) => {
