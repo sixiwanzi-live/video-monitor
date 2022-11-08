@@ -42,12 +42,12 @@ export default class ZimuApi {
 
     static async findClipsByOrganizationId(organizationId) {
         const url = `${config.zimu.url}/organizations/${organizationId}/clips`;
-        try {
-            return await axios.get(url);
-        } catch (ex) {
-            console.log(ex);
-            await PushApi.push(`查找organization(${organizationId})的视频列表失败`, ex.response.data);
+        const res = await fetch(url);
+        const json = await res.json();
+        if (!res.ok) {
+            throw json;
         }
+        return json;
     }
 
     static async findClipsByBv(bv) {
