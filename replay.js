@@ -169,6 +169,7 @@ const archives = [
                                 if (!err) {
                                     console.log('stdout:', stdout);
                                     console.log('stderr:', stderr);
+                                    res();
                                 } else {
                                     console.log(err);
                                     rej();
