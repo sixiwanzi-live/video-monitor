@@ -1,6 +1,6 @@
 
 import { stat } from 'fs/promises';
-import { exec } from 'child_process';
+import { spawn } from 'child_process';
 import fetch from 'node-fetch';
 import moment from 'moment';
 import PushApi from './api/PushApi.js';
