@@ -115,19 +115,32 @@ const archives = [
                     }
                     // 生成下载地址
                     const downloadUrl = `https://bili.lubo.media/d/${archive.path}/${file.name}`;
+                    // 提取date,title和name
+                    let date = '';
+                    let authorName = '';
+                    let title = '';
                     // 匹配YYYYMMDD-{name}-{title}.mp4的文件格式，并且提取出title和name
-                    const matches = file.name.match(/([0-9]+)\-(.*)-(.*)\.mp4/y);
-                    if (matches && matches.length !== 4) {
-                        continue;
+                    let matches = file.name.match(/([0-9]+)\-(.*)-(.*)\.mp4/y);
+                    if (!matches && matches.length === 4) {
+                        date = matches[1];
+                        authorName = matches[2];
+                        title = matches[3];
+                    } else {
+                        matches = file.name.match(/([0-9]+)\-([0-9]+)\-(.*)-(.*)\.mp4/y);
+                        if (!matches && matches.length === 5) {
+                            date = matches[1];
+                            authorName = matches[3];
+                            title = matches[4];
+                        } else {
+                            continue;
+                        }
                     }
-                    const datetime = matches[1];
-                    const authorName = matches[2];
-                    const title = matches[3];
+                    
                     const matchedClip = clips.filter(
                         clip => {
                             return clip.title === title && 
                             clip.author.name === authorName && 
-                            clip.datetime.substring(0, 10).replaceAll('-', '') === datetime
+                            clip.datetime.substring(0, 10).replaceAll('-', '') === date
                         }
                     )[0];
                     console.log(matchedClip);
@@ -135,7 +148,7 @@ const archives = [
                         continue;
                     }
                     // 生成本地文件路径
-                    const dst = `/mnt/data/record/${archive.organizationId}/${authorName}/${datetime.substring(0, 4)}-${datetime.substring(4, 6)}/${matchedClip.datetime.replaceAll('-','').replaceAll(':','').replace(' ', '-')}-${authorName}-${title}.mp4`;
+                    const dst = `/mnt/data/record/${archive.organizationId}/${authorName}/${date.substring(0, 4)}-${date.substring(4, 6)}/${matchedClip.datetime.replaceAll('-','').replaceAll(':','').replace(' ', '-')}-${authorName}-${title}.mp4`;
                     // 判断文件是否已经存在，已存在的文件不再下载
                     try {
                         await stat(dst);
@@ -152,11 +165,9 @@ const archives = [
                             ];
                             let p = spawn('wget', cmd);
                             p.stdout.on('data', (data) => {
-                                data.toString();
                                 // console.log('stdout: ' + data.toString());
                             });
                             p.stderr.on('data', (data) => {
-                                data.toString();
                                 // console.log('stderr: ' + data.toString());
                             });
                             p.on('close', (code) => {
