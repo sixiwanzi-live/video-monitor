@@ -121,13 +121,13 @@ const archives = [
                     let title = '';
                     // 匹配YYYYMMDD-{name}-{title}.mp4的文件格式，并且提取出title和name
                     let matches = file.name.match(/([0-9]+)\-(.*)-(.*)\.mp4/y);
-                    if (!matches && matches.length === 4) {
+                    if (matches && matches.length === 4) {
                         date = matches[1];
                         authorName = matches[2];
                         title = matches[3];
                     } else {
                         matches = file.name.match(/([0-9]+)\-([0-9]+)\-(.*)-(.*)\.mp4/y);
-                        if (!matches && matches.length === 5) {
+                        if (matches && matches.length === 5) {
                             date = matches[1];
                             authorName = matches[3];
                             title = matches[4];
