@@ -136,14 +136,14 @@ const archives = [
                     }
                     // 生成本地文件路径
                     const dst = `/mnt/data/record/${archive.organizationId}/${authorName}/${datetime.substring(0, 4)}-${datetime.substring(4, 6)}/${matchedClip.datetime.replaceAll('-','').replaceAll(':','').replace(' ', '-')}-${authorName}-${title}.mp4`;
-                    console.log(downloadUrl);
-                    console.log(dst);
                     // 判断文件是否已经存在，已存在的文件不再下载
                     try {
                         await stat(dst);
                         continue;
                     } catch (ex) {}
 
+                    console.log(downloadUrl);
+                    console.log(dst);
                     // 下载视频
                     try {
                         await new Promise((res, rej) => {
