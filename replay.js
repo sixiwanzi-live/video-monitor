@@ -1,6 +1,6 @@
 
 import { stat } from 'fs/promises';
-import {spawn} from 'child_process';
+import { exec } from 'child_process';
 import fetch from 'node-fetch';
 import moment from 'moment';
 import PushApi from './api/PushApi.js';
@@ -147,23 +147,36 @@ const archives = [
                     // 下载视频
                     try {
                         await new Promise((res, rej) => {
-                            let cmd = [
-                                downloadUrl, '-O', dst
-                            ];
-                            let p = spawn('wget', cmd);
-                            p.stdout.on('data', (data) => {
-                                console.log('stdout: ' + data.toString());
+                            // let cmd = [
+                            //     downloadUrl, '-O', dst
+                            // ];
+                            // let p = spawn('wget', cmd);
+                            // p.stdout.on('data', (data) => {
+                            //     console.log('stdout: ' + data.toString());
+                            // });
+                            // p.stderr.on('data', (data) => {
+                            //     console.log('stderr: ' + data.toString());
+                            // });
+                            // p.on('close', (code) => {
+                            //     console.log(`下载结束, code:${code}`);
+                            //     res();
+                            // });
+                            // p.on('error', (error) => {
+                            //     console.error(`错误码:${error}`);
+                            //     rej(error);
+                            // });
+                            let p = exec(`wget ${downloadUrl} -O ${dst}`, (err, stdout, stderr) => {
+                                if (!err) {
+                                    console.log('stdout:', stdout);
+                                    console.log('stderr:', stderr);
+                                } else {
+                                    console.log(err);
+                                    rej();
+                                }
                             });
-                            p.stderr.on('data', (data) => {
-                                console.log('stderr: ' + data.toString());
-                            });
-                            p.on('close', (code) => {
+                            p.on('exit', code => {
                                 console.log(`下载结束, code:${code}`);
                                 res();
-                            });
-                            p.on('error', (error) => {
-                                console.error(`错误码:${error}`);
-                                rej(error);
                             });
                         });
                     } catch (ex) {
