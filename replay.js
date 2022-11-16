@@ -161,36 +161,36 @@ const archives = [
                     continue;
                 } catch (ex) {}
 
-                const updatedClip = {
-                    id: matchedClip.id,
-                    type: 2,
-                    playUrl: `bili.lubo.media/d/${archive.path}/${file.name}`,
-                    redirectUrl: `bili.lubo.media/${archive.path}/${file.name}`
-                };
-                console.log(updatedClip);
-                await ZimuApi.updateClip(updatedClip);
                 // 下载视频
                 try {
-                    // await new Promise((res, rej) => {
-                    //     let cmd = [
-                    //         downloadUrl, '-O', dst
-                    //     ];
-                    //     let p = spawn('wget', cmd);
-                    //     p.stdout.on('data', (data) => {
-                    //         // console.log('stdout: ' + data.toString());
-                    //     });
-                    //     p.stderr.on('data', (data) => {
-                    //         // console.log('stderr: ' + data.toString());
-                    //     });
-                    //     p.on('close', (code) => {
-                    //         console.log(`下载结束, code:${code}`);
-                    //         res();
-                    //     });
-                    //     p.on('error', (error) => {
-                    //         console.error(`错误码:${error}`);
-                    //         rej(error);
-                    //     });
-                    // });
+                    await new Promise((res, rej) => {
+                        let cmd = [
+                            downloadUrl, '-O', dst
+                        ];
+                        let p = spawn('wget', cmd);
+                        p.stdout.on('data', (data) => {
+                            // console.log('stdout: ' + data.toString());
+                        });
+                        p.stderr.on('data', (data) => {
+                            // console.log('stderr: ' + data.toString());
+                        });
+                        p.on('close', (code) => {
+                            console.log(`下载结束, code:${code}`);
+                            res();
+                        });
+                        p.on('error', (error) => {
+                            console.error(`错误码:${error}`);
+                            rej(error);
+                        });
+                    });
+                    const updatedClip = {
+                        id: matchedClip.id,
+                        type: 2,
+                        playUrl: `bili.lubo.media/d/${archive.path}/${file.name}`,
+                        redirectUrl: `bili.lubo.media/${archive.path}/${file.name}`
+                    };
+                    console.log(updatedClip);
+                    await ZimuApi.updateClip(updatedClip);
                 } catch (ex) {
                     console.log(ex);
                     PushApi.push(`下载"${title}"视频失败`, ex.response.data);
