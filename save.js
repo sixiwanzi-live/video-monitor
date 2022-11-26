@@ -4,7 +4,7 @@ import { spawn } from 'child_process';
 (async () => {
     const path = '四禧丸子/2022.05';
     // 获取录播站源
-    const url = 'https://bili.lubo.media/api/fs/list';
+    const url = 'https://rec.bili.studio/api/fs/list';
     const params = {
         page: 1,
         password: '',
@@ -19,7 +19,7 @@ import { spawn } from 'child_process';
         for (let i = 0; i < files.length; ++i) {
             const file = files[i];
             if (file.name.indexOf('.mp4') === -1) continue;
-            const downloadUrl = encodeURI(`https://bili.lubo.media/d/${path}/${file.name}`);
+            const downloadUrl = encodeURI(`https://rec.bili.studio/d/${path}/${file.name}`);
             console.log(downloadUrl);
             const dest = `/mnt/data/tmp/video/${path}/${file.name}`;
             console.log(dest);
