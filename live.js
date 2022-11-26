@@ -59,11 +59,11 @@ prefixSet.add(21);
             if (dirMap.has(user.id)) {
                 clip.type = 2;
                 if (prefixSet.has(user.id)) {
-                    clip.playUrl = `bili.lubo.media/d/${dirMap.get(user.id)}/${liveTime.format('YYYYMMDD-HHmmss')}-${user.name}-${clip.title}.mp4`;
-                    clip.redirectUrl = `bili.lubo.media/${dirMap.get(user.id)}/${liveTime.format('YYYYMMDD-HHmmss')}-${user.name}-${clip.title}.mp4`;
+                    clip.playUrl = `rec.bili.studio/d/${dirMap.get(user.id)}/${liveTime.format('YYYYMMDD-HHmmss')}-${user.name}-${clip.title}.mp4`;
+                    clip.redirectUrl = `rec.bili.studio/${dirMap.get(user.id)}/${liveTime.format('YYYYMMDD-HHmmss')}-${user.name}-${clip.title}.mp4`;
                 } else {
-                    clip.playUrl = `bili.lubo.media/d/${dirMap.get(user.id)}/${liveTime.format('YYYYMMDD')}-${user.name}-${clip.title}.mp4`;
-                    clip.redirectUrl = `bili.lubo.media/${dirMap.get(user.id)}/${liveTime.format('YYYYMMDD')}-${user.name}-${clip.title}.mp4`;    
+                    clip.playUrl = `rec.bili.studio/d/${dirMap.get(user.id)}/${liveTime.format('YYYYMMDD')}-${user.name}-${clip.title}.mp4`;
+                    clip.redirectUrl = `rec.bili.studio/${dirMap.get(user.id)}/${liveTime.format('YYYYMMDD')}-${user.name}-${clip.title}.mp4`;    
                 }
             }
             console.log(clip);
