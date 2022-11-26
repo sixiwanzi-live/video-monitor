@@ -87,7 +87,7 @@ const archives = [
         const today = moment().format('YYYYMMDD');
         const yesterday = moment().subtract(1, 'days').format('YYYYMMDD');
         // 获取录播站源
-        const url = 'https://bili.lubo.media/api/fs/list';
+        const url = 'https://rec.bili.studio/api/fs/list';
         const params = {
             page: 1,
             password: '',
@@ -116,9 +116,9 @@ const archives = [
                 if (!file.name.startsWith(today) && !file.name.startsWith(yesterday)) {
                     continue;
                 }
-                const redirectUrl = `https://bili.lubo.media/${archive.path}/${file.name}`;
+                const redirectUrl = `https://rec.bili.studio/${archive.path}/${file.name}`;
                 // 生成下载地址
-                const downloadUrl = `https://bili.lubo.media/d/${archive.path}/${file.name}`;
+                const downloadUrl = `https://rec.bili.studio/d/${archive.path}/${file.name}`;
                 // 提取date,title和name
                 let date = '';
                 let authorName = '';
@@ -186,8 +186,8 @@ const archives = [
                     const updatedClip = {
                         id: matchedClip.id,
                         type: 2,
-                        playUrl: `bili.lubo.media/d/${archive.path}/${file.name}`,
-                        redirectUrl: `bili.lubo.media/${archive.path}/${file.name}`
+                        playUrl: `rec.bili.studio/d/${archive.path}/${file.name}`,
+                        redirectUrl: `rec.bili.studio/${archive.path}/${file.name}`
                     };
                     console.log(updatedClip);
                     await ZimuApi.updateClip(updatedClip);
