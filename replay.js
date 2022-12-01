@@ -5,6 +5,7 @@ import fetch from 'node-fetch';
 import moment from 'moment';
 import PushApi from './api/PushApi.js';
 import ZimuApi from './api/ZimuApi.js';
+import DiskApi from './api/DiskApi.js';
 
 const archives = [
     {
