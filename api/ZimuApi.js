@@ -32,12 +32,12 @@ export default class ZimuApi {
 
     static async findLatestClipByAuthorId(authorId) {
         const url = `${config.zimu.url}/authors/${authorId}/latest-clip`;
-        try {
-            return await axios.get(url);
-        } catch (ex) {
-            console.log(ex);
-            await PushApi.push(`查找author(${authorId})的最新视频失败`, ex.response.data);
+        const res = await fetch(url);
+        const json = await res.json();
+        if (!res.ok) {
+            throw json;
         }
+        return json;
     }
 
     static async findClipsByOrganizationId(organizationId) {
