@@ -78,7 +78,7 @@ const archives = [
 
             // 下载视频
             try {
-                // await DiskApi.saveByBv(video.bvid);
+                await DiskApi.saveByBv(video.bvid);
             } catch (ex) {
                 console.log(ex);
                 PushApi.push(`下载"${title}"视频失败`, ex);
