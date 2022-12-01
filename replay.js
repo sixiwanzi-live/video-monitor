@@ -125,6 +125,7 @@ const archives = [
                 if (!res.ok) {
                     throw json;
                 }
+                console.log(json);
                 const files = json.data.content.filter(file => !file.is_dir && file.type === 2 && file.size > 0);
                 for (let i = 0; i < files.length; ++i) {
                     const file = files[i];
