@@ -170,7 +170,7 @@ const archives = [
                         continue;
                     }
                     // 生成本地文件路径
-                    const dst = `/mnt/data/record/${archive.organizationId}/${authorName}/${date.substring(0, 4)}-${date.substring(4, 6)}/${matchedClip.datetime.replaceAll('-','').replaceAll(':','').replace(' ', '-')}-${authorName}-${title}.mp4`;
+                    const dst = `/mnt/data/record/${archive.organizationId}/${authorName}/${date.substring(0, 4)}-${date.substring(4, 6)}/${matchedClip.datetime.replaceAll('-','').replaceAll(':','').replace(' ', '-')}-${authorName}-${matchedClip.title}.mp4`;
                     // 判断文件是否已经存在，已存在的文件不再下载
                     try {
                         await stat(dst);
