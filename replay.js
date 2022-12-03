@@ -161,7 +161,7 @@ const archives = [
                     
                     const matchedClip = clips.filter(
                         clip => {
-                            return clip.title === title && 
+                            return clip.title === title.replaceAll('_', '') && 
                             clip.author.name === authorName && 
                             clip.datetime.substring(0, 10).replaceAll('-', '') === date
                         }
@@ -177,40 +177,42 @@ const archives = [
                         continue;
                     } catch (ex) {}
 
+                    console.log(`下载地址:${downloadUrl}`);
+                    console.log(`本地路径:${dst}`);
                     // 下载视频
-                    try {
-                        await new Promise((res, rej) => {
-                            let cmd = [
-                                downloadUrl, '-O', dst
-                            ];
-                            let p = spawn('wget', cmd);
-                            p.stdout.on('data', (data) => {
-                                // console.log('stdout: ' + data.toString());
-                            });
-                            p.stderr.on('data', (data) => {
-                                // console.log('stderr: ' + data.toString());
-                            });
-                            p.on('close', (code) => {
-                                console.log(`下载结束, code:${code}`);
-                                res();
-                            });
-                            p.on('error', (error) => {
-                                console.error(`错误码:${error}`);
-                                rej(error);
-                            });
-                        });
-                        const updatedClip = {
-                            id: matchedClip.id,
-                            type: 2,
-                            playUrl: `rec.bili.studio/d/${archive.path}/${file.name}`,
-                            redirectUrl: `rec.bili.studio/${archive.path}/${file.name}`
-                        };
-                        console.log(updatedClip);
-                        await ZimuApi.updateClip(updatedClip);
-                    } catch (ex) {
-                        console.log(ex);
-                        PushApi.push(`下载"${title}"视频失败`, ex.response.data);
-                    }
+                    // try {
+                    //     await new Promise((res, rej) => {
+                    //         let cmd = [
+                    //             downloadUrl, '-O', dst
+                    //         ];
+                    //         let p = spawn('wget', cmd);
+                    //         p.stdout.on('data', (data) => {
+                    //             // console.log('stdout: ' + data.toString());
+                    //         });
+                    //         p.stderr.on('data', (data) => {
+                    //             // console.log('stderr: ' + data.toString());
+                    //         });
+                    //         p.on('close', (code) => {
+                    //             console.log(`下载结束, code:${code}`);
+                    //             res();
+                    //         });
+                    //         p.on('error', (error) => {
+                    //             console.error(`错误码:${error}`);
+                    //             rej(error);
+                    //         });
+                    //     });
+                    //     const updatedClip = {
+                    //         id: matchedClip.id,
+                    //         type: 2,
+                    //         playUrl: `rec.bili.studio/d/${archive.path}/${file.name}`,
+                    //         redirectUrl: `rec.bili.studio/${archive.path}/${file.name}`
+                    //     };
+                    //     console.log(updatedClip);
+                    //     await ZimuApi.updateClip(updatedClip);
+                    // } catch (ex) {
+                    //     console.log(ex);
+                    //     PushApi.push(`下载"${title}"视频失败`, ex.response.data);
+                    // }
                 }
             } catch (ex) {
                 console.log(ex);
