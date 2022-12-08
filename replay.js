@@ -167,6 +167,7 @@ const archives = [
                         }
                     )[0];
                     if (!matchedClip) {
+                        console.log('无匹配clip');
                         continue;
                     }
                     // 生成本地文件路径
@@ -174,6 +175,7 @@ const archives = [
                     // 判断文件是否已经存在，已存在的文件不再下载
                     try {
                         await stat(dst);
+                        console.log('MP4文件已经存在');
                         continue;
                     } catch (ex) {}
 
