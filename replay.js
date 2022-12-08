@@ -142,28 +142,26 @@ const archives = [
                     
                     // 匹配YYYYMMDD-HHmmss-{name}-{title}.mp4的文件格式
                     let matches = file.name.match(/([0-9]+)\-([0-9]+)\-(.*)-(.*)\.mp4/y);
-                    if (matches && matches.length === 5) {
-                        console.log(matches);
-                        date = matches[1];
-                        authorName = matches[3];
-                        title = matches[4];
-                    } else {
-                        // 匹配YYYYMMDD-{name}-{title}.mp4的文件格式
-                        matches = file.name.match(/([0-9]+)\-(.*)-(.*)\.mp4/y);
-                        if (matches && matches.length === 4) {
-                            date = matches[1];
-                            authorName = matches[2];
-                            title = matches[3];
-                        } else {
-                            continue;
-                        }
-                    }
+                    console.log(matches);
+                    date = matches[1];
+                    authorName = matches[3];
+                    title = matches[4];
                     
                     const matchedClip = clips.filter(
                         clip => {
-                            return clip.title === title.replaceAll('_', '') && 
-                            clip.author.name === authorName && 
-                            clip.datetime.substring(0, 10).replaceAll('-', '') === date
+                            if (clip.title !== title.replaceAll('_', '')) {
+                                console.log('标题不匹配');
+                                return false;
+                            }
+                            if (clip.author.name !== authorName) {
+                                console.log('作者不匹配');
+                                return false;
+                            }
+                            if (clip.datetime.substring(0, 10).replaceAll('-', '') === date) {
+                                console.log('时间不匹配');
+                                return false;
+                            }
+                            return true;
                         }
                     )[0];
                     if (!matchedClip) {
