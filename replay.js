@@ -149,19 +149,9 @@ const archives = [
                     
                     const matchedClip = clips.filter(
                         clip => {
-                            if (clip.title !== title.replaceAll('_', '')) {
-                                console.log('标题不匹配');
-                                return false;
-                            }
-                            if (clip.author.name !== authorName) {
-                                console.log('作者不匹配');
-                                return false;
-                            }
-                            if (clip.datetime.substring(0, 10).replaceAll('-', '') === date) {
-                                console.log('时间不匹配');
-                                return false;
-                            }
-                            return true;
+                            return clip.title === title.replaceAll('_', '') && 
+                            clip.author.name === authorName && 
+                            clip.datetime.substring(0, 10).replaceAll('-', '') === date
                         }
                     )[0];
                     if (!matchedClip) {
