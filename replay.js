@@ -48,7 +48,13 @@ const archives = [
         organizationId: 6,
         path: `sp9/明前奶绿/${moment().format('YYYY.MM')}`,
         mode: 2
-    }
+    },
+    {
+        // 灯夜tomoya
+        authorId: 29,
+        url: 'https://api.bilibili.com/x/polymer/space/seasons_archives_list?mid=7262655&season_id=869232&sort_reverse=false&page_num=1&page_size=1',
+        mode: 1
+    },
 ];
 
 (async () => {
