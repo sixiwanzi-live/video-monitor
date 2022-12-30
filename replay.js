@@ -52,7 +52,7 @@ const archives = [
     {
         // 灯夜tomoya
         authorId: 29,
-        url: 'https://api.bilibili.com/x/polymer/space/seasons_archives_list?mid=7262655&season_id=869232&sort_reverse=false&page_num=1&page_size=1',
+        url: 'https://api.bilibili.com/x/series/archives?mid=1854400894&series_id=2880259&only_normal=true&sort=desc&pn=1&ps=1',
         mode: 1
     },
 ];
