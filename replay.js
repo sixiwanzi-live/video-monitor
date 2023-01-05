@@ -55,7 +55,23 @@ const archives = [
         url: 'https://api.bilibili.com/x/series/archives?mid=1854400894&series_id=2880259&only_normal=true&sort=desc&pn=1&ps=1',
         mode: 1
     },
+    {
+        // 扇宝
+        authorId: 30,
+        url: 'https://api.bilibili.com/x/polymer/space/seasons_archives_list?mid=1682965468&season_id=983010&sort_reverse=false&page_num=1&page_size=1',
+        mode: 1
+    },
 ];
+
+const fromMicroseconds = (microseconds) => {
+    const ms = parseInt(microseconds % 1000);
+    const seconds = parseInt(microseconds / 1000);
+    const ss = parseInt(seconds % 60);
+    const minutes = parseInt(seconds / 60);
+    const mm = parseInt(minutes % 60);
+    const hh = parseInt(minutes / 60);
+    return `${hh.toString().padStart(2, 0)}:${mm.toString().padStart(2, 0)}:${ss.toString().padStart(2, 0)},${ms.toString().padStart(3, 0)}`;
+}
 
 (async () => {
     for (let i = 0; i < archives.length; ++i) {
@@ -88,7 +104,7 @@ const archives = [
                 await DiskApi.saveByBv(video.bvid);
             } catch (ex) {
                 console.log(ex);
-                PushApi.push(`下载"${title}"视频失败`, ex);
+                PushApi.push(`下载"${video.title}"视频失败`, ex);
                 continue;
             }
 
@@ -102,6 +118,41 @@ const archives = [
             } catch (ex) {
                 console.log(ex);
                 PushApi.push(`更新clip(${clip.title})的bv失败`, ex);
+                continue;
+            }
+            try {
+                const infoUrl = `https://api.bilibili.com/x/web-interface/view?bvid=${video.bvid}`;
+                const infoRes = await fetch(infoUrl);
+                const infoJson = await infoRes.json();
+                if (!infoRes.ok) {
+                    throw infoJson;
+                }
+                if (infoJson.data.subtitle.list.length > 0) {
+                    const subtitleUrl = infoJson.data.subtitle.list[0].subtitle_url;
+                    const subtitleRes = await fetch(subtitleUrl);
+                    const subtitleJson = await subtitleRes.json();
+                    if (!subtitleRes.ok) {
+                        throw subtitleJson;
+                    }
+                    let srt = '';
+                    const subtitles = subtitleJson.body;
+                    for (let k = 0; k < subtitles.length; ++k) {
+                        const subtitle = subtitles[k];
+                        const lineId = subtitle.sid;
+                        const startTime = fromMicroseconds(subtitle.from * 1000);
+                        const endTime = fromMicroseconds(subtitle.to * 1000);
+                        const content = subtitle.content;
+                        const line = `${lineId}\r\n${startTime} --> ${endTime}\r\n${content}\r\n\r\n`;
+                        srt += line;
+                    }
+                    await ZimuApi.insertSubtitle(clip.id, srt);
+                    console.log(`写入字幕:${video.bvid},${clip.datetime},${video.title}`);
+                } else {
+                    console.log(`找不到字幕:${video.bvid},${video.title}`);
+                }
+            } catch (ex) {
+                console.log(ex);
+                PushApi.push(`更新clip(${clip.title})的subtitle失败`, ex);
                 continue;
             }
         } else if (archive.mode === 2) {

@@ -30,6 +30,19 @@ export default class ZimuApi {
         }
     }
 
+    static async insertSubtitle(clipId, srt) {
+        const url = `${config.zimu.url}/clips/${clipId}/subtitles`;
+        const res = await fetch(url, {
+            method: 'POST',
+            headers: {
+                'Authorization': `Bearer ${config.zimu.auth}`,
+                'Content-Type': 'text/plain;charset=utf-8'
+            },
+            body: srt
+        });
+        return;
+    }
+
     static async findLatestClipByAuthorId(authorId) {
         const url = `${config.zimu.url}/authors/${authorId}/latest-clip`;
         const res = await fetch(url);

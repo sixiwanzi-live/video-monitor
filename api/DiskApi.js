@@ -5,7 +5,7 @@ export default class DiskApi {
 
     static async saveByBv(bv) {
         const url = `${config.disk.url}/disks`;
-        const res = await axios.post(url, {bv}, {timeout:60 *60 * 1000});
+        const res = await axios.post(url, {bv}, {timeout:60 * 60 * 1000});
         return res.data;
     }
 
