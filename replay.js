@@ -100,13 +100,13 @@ const fromMicroseconds = (microseconds) => {
             }
 
             // 下载视频
-            try {
-                await DiskApi.saveByBv(video.bvid);
-            } catch (ex) {
-                console.log(ex);
-                PushApi.push(`下载"${video.title}"视频失败`, ex);
-                continue;
-            }
+            // try {
+            //     await DiskApi.saveByBv(video.bvid);
+            // } catch (ex) {
+            //     console.log(ex);
+            //     PushApi.push(`下载"${video.title}"视频失败`, ex);
+            //     continue;
+            // }
 
             try {
                 const updatedClip = {
@@ -183,7 +183,6 @@ const fromMicroseconds = (microseconds) => {
                 if (!res.ok) {
                     throw json;
                 }
-                console.log(json);
                 const files = json.data.content.filter(file => !file.is_dir && file.type === 2 && file.size > 0);
                 for (let i = 0; i < files.length; ++i) {
                     const file = files[i];
