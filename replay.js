@@ -25,9 +25,10 @@ const archives = [
         mode: 2
     },
     {
-        organizationId: 8,
-        path: `sp9/凜凜蝶凜/${moment().format('YYYY.MM')}`,
-        mode: 2
+        // 凜凜蝶凜
+        authorId: 21,
+        url: 'https://api.bilibili.com/x/series/archives?mid=1220317431&series_id=2610314&only_normal=true&sort=desc&pn=1&ps=1',
+        mode: 1
     },
     {
         organizationId: 9,
@@ -76,44 +77,34 @@ const fromMicroseconds = (microseconds) => {
 (async () => {
     for (let i = 0; i < archives.length; ++i) {
         const archive = archives[i];
+        // 处理B站源
         if (archive.mode === 1) {
             const clip = await ZimuApi.findLatestClipByAuthorId(archive.authorId);
-            // 如果不是直播中就不用更新
-            if (clip.type !== 4) {
+            // 如果不是直播中或者待解析就不用更新
+            if (clip.type !== 4 || clip.type !== 1) {
                 continue;
             }
             // 获取B站源
             let video = {};
-            try {
-                const res = await fetch(archive.url);  // 请求合集列表
-                const json = await res.json();
-                video = json.data.archives[0];
-            } catch (ex) {
-                console.log(ex);
-                PushApi.push(`请求回放列表失败`, ex);
+            const archiveRes = await fetch(archive.url);  // 请求合集列表
+            const archiveJson = await archiveRes.json();
+            if (!archiveRes.ok) {
+                PushApi.push(`请求回放列表失败`, JSON.stringify(archiveJson));
                 continue;
             }
-            console.log(video.title, video.bvid);
+            video = archiveJson.data.archives[0];
+            console.log(`列表中的最新录播为:${video.title},${video.bvid}`);
 
             if (video.title.indexOf(clip.title) === -1) {
                 continue;
             }
-
-            // 下载视频
-            // try {
-            //     await DiskApi.saveByBv(video.bvid);
-            // } catch (ex) {
-            //     console.log(ex);
-            //     PushApi.push(`下载"${video.title}"视频失败`, ex);
-            //     continue;
-            // }
 
             try {
                 const updatedClip = {
                     id: clip.id,
                     bv: video.bvid
                 };
-                console.log(updatedClip);
+                console.log(`将更新clip:${updatedClip.id},${updatedClip.bv}`);
                 await ZimuApi.updateClip(updatedClip);
             } catch (ex) {
                 console.log(ex);
@@ -121,19 +112,25 @@ const fromMicroseconds = (microseconds) => {
                 continue;
             }
             try {
+                // 获取录播基础信息
                 const infoUrl = `https://api.bilibili.com/x/web-interface/view?bvid=${video.bvid}`;
                 const infoRes = await fetch(infoUrl);
                 const infoJson = await infoRes.json();
                 if (!infoRes.ok) {
-                    throw infoJson;
+                    PushApi.push(`获取录播基础信息失败(${video.bvid}, ${clip.title})`, ex);
+                    continue;
                 }
+                // 获取字幕信息
                 if (infoJson.data.subtitle.list.length > 0) {
                     const subtitleUrl = infoJson.data.subtitle.list[0].subtitle_url;
                     const subtitleRes = await fetch(subtitleUrl);
                     const subtitleJson = await subtitleRes.json();
                     if (!subtitleRes.ok) {
-                        throw subtitleJson;
+                        console.log(`获取录播字幕失败(${video.bvid}, ${clip.title})`);
+                        PushApi.push(`获取录播字幕失败(${video.bvid}, ${clip.title})`, JSON.stringify(subtitleJson));
+                        continue;
                     }
+                    // json格式字幕转换成srt格式
                     let srt = '';
                     const subtitles = subtitleJson.body;
                     for (let k = 0; k < subtitles.length; ++k) {
@@ -148,7 +145,7 @@ const fromMicroseconds = (microseconds) => {
                     await ZimuApi.insertSubtitle(clip.id, srt);
                     console.log(`写入字幕:${video.bvid},${clip.datetime},${video.title}`);
                 } else {
-                    console.log(`找不到字幕:${video.bvid},${video.title}`);
+                    console.log(`写入字幕失败:${video.bvid},${video.title}`);
                 }
             } catch (ex) {
                 console.log(ex);
