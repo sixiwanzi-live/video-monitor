@@ -43,19 +43,18 @@ import { spawn, exec } from 'child_process';
     const audio_output = "1.m4a";
     const video_output = "1.mp4";
 
-    await new Promise((res, rej) => {
-        exec(`ffprobe -user_agent "${userAgent}" -headers "Referer: ${referer}" -select_streams v -show_frames -show_entries frame=pict_type -of csv ${videoUrl} | grep -n I | cut -d ':' -f 1`, { windowsHide:true }, (err, stdout, stderr) => {
-            console.log(stdout);
-            console.log(stderr);
-            if (err) {
-                console.error(err);
-                rej(err);
-            } else {
-                res();
-            }
-        });
-    });
-    return;
+    // await new Promise((res, rej) => {
+    //     exec(`ffprobe -user_agent "${userAgent}" -headers "Referer: ${referer}" -select_streams v -show_frames -show_entries frame=pict_type -of csv ${videoUrl} | grep -n I | cut -d ':' -f 1`, { windowsHide:true }, (err, stdout, stderr) => {
+    //         console.log(stdout);
+    //         console.log(stderr);
+    //         if (err) {
+    //             console.error(err);
+    //             rej(err);
+    //         } else {
+    //             res();
+    //         }
+    //     });
+    // });
 
     const audio_cmd = [
         '-y',
