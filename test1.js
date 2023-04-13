@@ -6,6 +6,7 @@ import { spawn, exec } from 'child_process';
     const res1 = await fetch(`https://api.bilibili.com/x/web-interface/view?bvid=${bv}`);
     const json1 = await res1.json();
     const cid = json1.data.cid;
+    const cookie = "buvid3=AD937EED-07C2-F583-E415-32C22BF2685F22900infoc; b_nut=1675051622; i-wanna-go-back=-1; _uuid=49D1077C1-FD84-F68C-C7E9-85FD678A485D21789infoc; buvid4=7D3099D8-1965-1A35-FC33-ABA672B3364C77881-023011913-P7lf7sklbprHfmwA5xuV3g==; DedeUserID=95111328; DedeUserID__ckMd5=3ce9e8c3da9ded5d; hit-dyn-v2=1; LIVE_BUVID=AUTO9116750516952078; rpdid=|(k|)Rl)YRRu0J'uY~l|lu~lu; nostalgia_conf=-1; b_ut=5; buvid_fp_plain=undefined; dy_spec_agreed=1; header_theme_version=CLOSE; home_feed_column=5; CURRENT_FNVAL=4048; CURRENT_PID=87fdcbb0-c9f9-11ed-a16e-41c824d3f3cb; hit-new-style-dyn=1; fingerprint=3f6eaf7ea280df74340fcbc17ba5a511; buvid_fp=3f6eaf7ea280df74340fcbc17ba5a511; FEED_LIVE_VERSION=V8; SESSDATA=998ae676,1696834766,fba69*41; bili_jct=aa855795a14b970879744c1a73cab788; sid=8836ahnf; b_lsid=6E107F266_18778D9E5ED; innersign=1; CURRENT_QUALITY=80; bp_video_offset_95111328=783929341015752700; PVID=3";
 
     const qn = 120;
     const fnval = 80;
@@ -22,7 +23,7 @@ import { spawn, exec } from 'child_process';
             "sec-fetch-site": "none",
             "sec-fetch-user": "?1",
             "upgrade-insecure-requests": "1",
-            "cookie": "buvid3=1920EF7B-3FB3-BEA9-FD90-67037CEA438C01952infoc; b_nut=1662693601; i-wanna-go-back=-1; _uuid=CD5FAFDA-E1032-6D59-BCEE-31061DC8E101D298025infoc; buvid_fp_plain=undefined; hit-dyn-v2=1; dy_spec_agreed=1; LIVE_BUVID=AUTO5016627358096968; nostalgia_conf=-1; buvid4=572A6042-A327-97B8-126A-03818229BEAD03207-022090911-aN5fltImCgRefx+S2eNvlYhgto0P5W6gjYegZNabKIK2/4HOIqiOZw==; fingerprint3=e9bc95f9ea3be414f706bed1d9735fc3; hit-new-style-dyn=0; rpdid=|(k|)Rl)YRRu0J'uYY)YRY)~k; b_ut=5; fingerprint=48862dfb7b7eba23fecac67cf60cf941; buvid_fp=48862dfb7b7eba23fecac67cf60cf941; header_theme_version=CLOSE; CURRENT_BLACKGAP=0; CURRENT_FNVAL=4048; home_feed_column=5; PVID=1; CURRENT_QUALITY=80; DedeUserID=1049010149; DedeUserID__ckMd5=824df193bec2f8d1; CURRENT_PID=f86ea370-d461-11ed-a61b-a510f092157a; FEED_LIVE_VERSION=V8; SESSDATA=a2c0ef10,1696911147,4f2b3*41; bili_jct=e48ba73fa498080a824103d6b8e8d0be; sid=78lg9290; bp_video_offset_1049010149=783864156322267100; b_lsid=10FF453B4_187790A18D2"
+            "cookie": cookie
         },
         "referrerPolicy": "strict-origin-when-cross-origin",
         "body": null,
