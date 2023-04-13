@@ -22,7 +22,7 @@ import { spawn, exec } from 'child_process';
             "sec-fetch-site": "none",
             "sec-fetch-user": "?1",
             "upgrade-insecure-requests": "1",
-            "cookie": ""
+            "cookie": "buvid3=1920EF7B-3FB3-BEA9-FD90-67037CEA438C01952infoc; b_nut=1662693601; i-wanna-go-back=-1; _uuid=CD5FAFDA-E1032-6D59-BCEE-31061DC8E101D298025infoc; buvid_fp_plain=undefined; hit-dyn-v2=1; dy_spec_agreed=1; LIVE_BUVID=AUTO5016627358096968; nostalgia_conf=-1; buvid4=572A6042-A327-97B8-126A-03818229BEAD03207-022090911-aN5fltImCgRefx+S2eNvlYhgto0P5W6gjYegZNabKIK2/4HOIqiOZw==; fingerprint3=e9bc95f9ea3be414f706bed1d9735fc3; hit-new-style-dyn=0; rpdid=|(k|)Rl)YRRu0J'uYY)YRY)~k; b_ut=5; fingerprint=48862dfb7b7eba23fecac67cf60cf941; buvid_fp=48862dfb7b7eba23fecac67cf60cf941; header_theme_version=CLOSE; CURRENT_BLACKGAP=0; CURRENT_FNVAL=4048; home_feed_column=5; PVID=1; CURRENT_QUALITY=80; DedeUserID=1049010149; DedeUserID__ckMd5=824df193bec2f8d1; CURRENT_PID=f86ea370-d461-11ed-a61b-a510f092157a; FEED_LIVE_VERSION=V8; SESSDATA=a2c0ef10,1696911147,4f2b3*41; bili_jct=e48ba73fa498080a824103d6b8e8d0be; sid=78lg9290; bp_video_offset_1049010149=783864156322267100; b_lsid=10FF453B4_187790A18D2"
         },
         "referrerPolicy": "strict-origin-when-cross-origin",
         "body": null,
