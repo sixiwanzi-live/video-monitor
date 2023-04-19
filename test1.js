@@ -43,22 +43,9 @@ import { spawn, exec } from 'child_process';
     const referer = "https://www.bilibili.com";
     const audio_output = "1.m4a";
     const video_output = "1.mp4";
-    const video2_output = "2.mp4";
-
-    // await new Promise((res, rej) => {
-    //     exec(`ffprobe -user_agent "${userAgent}" -headers "Referer: ${referer}" -select_streams v -show_frames -show_entries frame=pict_type -of csv ${videoUrl} | grep -n I | cut -d ':' -f 1`, { windowsHide:true }, (err, stdout, stderr) => {
-    //         console.log(stdout);
-    //         console.log(stderr);
-    //         if (err) {
-    //             console.error(err);
-    //             rej(err);
-    //         } else {
-    //             res();
-    //         }
-    //     });
-    // });
-
-    const audio_cmd = [
+    
+    // 获取视频切片
+    const video_cmd = [
         '-y',
         '-ss', st, 
         '-to', et, 
@@ -66,46 +53,14 @@ import { spawn, exec } from 'child_process';
         '-seekable', 1, 
         '-user_agent', userAgent, 
         '-headers', `Referer: ${referer}`,
-        '-i', audioUrl,
+        '-i', videoUrl,
+        '-copyts',
         '-c', 'copy',
         '-avoid_negative_ts', 1,
-        audio_output
+        video_output
     ];
 
     await new Promise((res, rej) => {
-        let p = spawn('ffmpeg', audio_cmd);
-        p.stdout.on('data', (data) => {
-            console.log('stdout: ' + data.toString());
-        });
-        p.stderr.on('data', (data) => {
-            console.log('stderr: ' + data.toString());
-        });
-        p.on('close', (code) => {
-            console.log(`音频生成结束, code:${code}`);
-            res();
-        });
-        p.on('error', (error) => {
-            ctx.logger.error(error);
-            rej(error);
-        });
-    });
-
-    await new Promise((res, rej) => {
-        const video_cmd = [
-            '-y',
-            '-user_agent', userAgent, 
-            '-headers', `Referer: ${referer}`,
-            '-ss', st, 
-            '-to', et, 
-            '-accurate_seek', 
-            '-seekable', 1, 
-            '-i', videoUrl,
-            // '-preset', 'superfast',
-            '-copyts',
-            '-c', 'copy',
-            '-avoid_negative_ts', 1,
-            video_output
-        ];
         let p = spawn('ffmpeg', video_cmd);
         p.stdout.on('data', (data) => {
             console.log('stdout: ' + data.toString());
@@ -121,81 +76,11 @@ import { spawn, exec } from 'child_process';
             ctx.logger.error(error);
             rej(error);
         });
-    })
-    
-    // const video_cmd = [
-    //     '-y',
-    //     '-ss', st, 
-    //     '-to', et, 
-    //     '-accurate_seek', 
-    //     '-seekable', 1, 
-    //     '-user_agent', userAgent, 
-    //     '-headers', `Referer: ${referer}`,
-    //     '-i', videoUrl,
-    //     '-preset', 'superfast',
-    //     // '-c', 'copy',
-    //     '-avoid_negative_ts', 1,
-    //     video_output
-    // ];
+    });
 
-    // await new Promise((res, rej) => {
-    //     let p = spawn('ffmpeg', video_cmd);
-    //     p.stdout.on('data', (data) => {
-    //         console.log('stdout: ' + data.toString());
-    //     });
-    //     p.stderr.on('data', (data) => {
-    //         console.log('stderr: ' + data.toString());
-    //     });
-    //     p.on('close', (code) => {
-    //         console.log(`视频生成结束, code:${code}`);
-    //         res();
-    //     });
-    //     p.on('error', (error) => {
-    //         ctx.logger.error(error);
-    //         rej(error);
-    //     });
-    // });
-
-    // const video2_cmd = [
-    //     '-y',
-    //     '-ss', st, 
-    //     '-to', et, 
-    //     '-accurate_seek', 
-    //     '-i', video_output,
-    //     '-avoid_negative_ts', 1,
-    //     video2_output
-    // ];
-
-    // await new Promise((res, rej) => {
-    //     let p = spawn('ffmpeg', video2_cmd);
-    //     p.stdout.on('data', (data) => {
-    //         console.log('stdout: ' + data.toString());
-    //     });
-    //     p.stderr.on('data', (data) => {
-    //         console.log('stderr: ' + data.toString());
-    //     });
-    //     p.on('close', (code) => {
-    //         console.log(`视频2生成结束, code:${code}`);
-    //         res();
-    //     });
-    //     p.on('error', (error) => {
-    //         ctx.logger.error(error);
-    //         rej(error);
-    //     });
-    // });
-
-    const mix_cmd = [
-        '-y',
-        '-i', video_output,
-        '-i', audio_output,
-        '-c:v', 'copy',
-        '-c:a', 'copy',
-        '-f', 'mp4',
-        `${bv}.mp4`
-    ];
-
+    // 分析视频实际长度
     await new Promise((res, rej) => {
-        let p = spawn('ffmpeg', mix_cmd);
+        let p = spawn('ffprobe', [video_output]);
         p.stdout.on('data', (data) => {
             console.log('stdout: ' + data.toString());
         });
@@ -203,7 +88,7 @@ import { spawn, exec } from 'child_process';
             console.log('stderr: ' + data.toString());
         });
         p.on('close', (code) => {
-            console.log(`混合结束, code:${code}`);
+            console.log(`视频生成结束, code:${code}`);
             res();
         });
         p.on('error', (error) => {
@@ -211,4 +96,76 @@ import { spawn, exec } from 'child_process';
             rej(error);
         });
     });
+    // await new Promise((res, rej) => {
+    //     exec(`ffprobe -user_agent "${userAgent}" -headers "Referer: ${referer}" -select_streams v -show_frames -show_entries frame=pict_type -of csv ${videoUrl} | grep -n I | cut -d ':' -f 1`, { windowsHide:true }, (err, stdout, stderr) => {
+    //         console.log(stdout);
+    //         console.log(stderr);
+    //         if (err) {
+    //             console.error(err);
+    //             rej(err);
+    //         } else {
+    //             res();
+    //         }
+    //     });
+    // });
+
+    // const audio_cmd = [
+    //     '-y',
+    //     '-ss', st, 
+    //     '-to', et, 
+    //     '-accurate_seek', 
+    //     '-seekable', 1, 
+    //     '-user_agent', userAgent, 
+    //     '-headers', `Referer: ${referer}`,
+    //     '-i', audioUrl,
+    //     '-c', 'copy',
+    //     '-avoid_negative_ts', 1,
+    //     audio_output
+    // ];
+
+    // await new Promise((res, rej) => {
+    //     let p = spawn('ffmpeg', audio_cmd);
+    //     p.stdout.on('data', (data) => {
+    //         console.log('stdout: ' + data.toString());
+    //     });
+    //     p.stderr.on('data', (data) => {
+    //         console.log('stderr: ' + data.toString());
+    //     });
+    //     p.on('close', (code) => {
+    //         console.log(`音频生成结束, code:${code}`);
+    //         res();
+    //     });
+    //     p.on('error', (error) => {
+    //         ctx.logger.error(error);
+    //         rej(error);
+    //     });
+    // });
+
+    // const mix_cmd = [
+    //     '-y',
+    //     '-i', video_output,
+    //     '-i', audio_output,
+    //     '-c:v', 'copy',
+    //     '-c:a', 'copy',
+    //     '-f', 'mp4',
+    //     `${bv}.mp4`
+    // ];
+
+    // await new Promise((res, rej) => {
+    //     let p = spawn('ffmpeg', mix_cmd);
+    //     p.stdout.on('data', (data) => {
+    //         console.log('stdout: ' + data.toString());
+    //     });
+    //     p.stderr.on('data', (data) => {
+    //         console.log('stderr: ' + data.toString());
+    //     });
+    //     p.on('close', (code) => {
+    //         console.log(`混合结束, code:${code}`);
+    //         res();
+    //     });
+    //     p.on('error', (error) => {
+    //         ctx.logger.error(error);
+    //         rej(error);
+    //     });
+    // });
 })();
