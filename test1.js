@@ -100,9 +100,9 @@ import { spawn, exec } from 'child_process';
             '-accurate_seek', 
             '-seekable', 1, 
             '-i', videoUrl,
-            '-preset', 'superfast',
-            // '-copyts',
-            // '-c', 'copy',
+            // '-preset', 'superfast',
+            '-copyts',
+            '-c', 'copy',
             '-avoid_negative_ts', 1,
             video_output
         ];
