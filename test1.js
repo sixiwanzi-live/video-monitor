@@ -120,76 +120,64 @@ const fromMicroseconds = (microseconds) => {
     });
     console.log(`cur_st:${cur_st}`);
     console.log(`cur_et:${cur_et}`);
-    // await new Promise((res, rej) => {
-    //     exec(`ffprobe -user_agent "${userAgent}" -headers "Referer: ${referer}" -select_streams v -show_frames -show_entries frame=pict_type -of csv ${videoUrl} | grep -n I | cut -d ':' -f 1`, { windowsHide:true }, (err, stdout, stderr) => {
-    //         console.log(stdout);
-    //         console.log(stderr);
-    //         if (err) {
-    //             console.error(err);
-    //             rej(err);
-    //         } else {
-    //             res();
-    //         }
-    //     });
-    // });
 
-    // const audio_cmd = [
-    //     '-y',
-    //     '-ss', st, 
-    //     '-to', et, 
-    //     '-accurate_seek', 
-    //     '-seekable', 1, 
-    //     '-user_agent', userAgent, 
-    //     '-headers', `Referer: ${referer}`,
-    //     '-i', audioUrl,
-    //     '-c', 'copy',
-    //     '-avoid_negative_ts', 1,
-    //     audio_output
-    // ];
+    const audio_cmd = [
+        '-y',
+        '-ss', cur_st, 
+        '-to', cur_et, 
+        '-accurate_seek', 
+        '-seekable', 1, 
+        '-user_agent', userAgent, 
+        '-headers', `Referer: ${referer}`,
+        '-i', audioUrl,
+        '-c', 'copy',
+        '-avoid_negative_ts', 1,
+        audio_output
+    ];
 
-    // await new Promise((res, rej) => {
-    //     let p = spawn('ffmpeg', audio_cmd);
-    //     p.stdout.on('data', (data) => {
-    //         console.log('stdout: ' + data.toString());
-    //     });
-    //     p.stderr.on('data', (data) => {
-    //         console.log('stderr: ' + data.toString());
-    //     });
-    //     p.on('close', (code) => {
-    //         console.log(`音频生成结束, code:${code}`);
-    //         res();
-    //     });
-    //     p.on('error', (error) => {
-    //         ctx.logger.error(error);
-    //         rej(error);
-    //     });
-    // });
+    await new Promise((res, rej) => {
+        let p = spawn('ffmpeg', audio_cmd);
+        p.stdout.on('data', (data) => {
+            console.log('stdout: ' + data.toString());
+        });
+        p.stderr.on('data', (data) => {
+            console.log('stderr: ' + data.toString());
+        });
+        p.on('close', (code) => {
+            console.log(`音频生成结束, code:${code}`);
+            res();
+        });
+        p.on('error', (error) => {
+            ctx.logger.error(error);
+            rej(error);
+        });
+    });
 
-    // const mix_cmd = [
-    //     '-y',
-    //     '-i', video_output,
-    //     '-i', audio_output,
-    //     '-c:v', 'copy',
-    //     '-c:a', 'copy',
-    //     '-f', 'mp4',
-    //     `${bv}.mp4`
-    // ];
+    const mix_cmd = [
+        '-y',
+        '-i', video_output,
+        '-i', audio_output,
+        '-c:v', 'copy',
+        '-c:a', 'copy',
+        '-f', 'mp4',
+        `${bv}.mp4`
+    ];
 
-    // await new Promise((res, rej) => {
-    //     let p = spawn('ffmpeg', mix_cmd);
-    //     p.stdout.on('data', (data) => {
-    //         console.log('stdout: ' + data.toString());
-    //     });
-    //     p.stderr.on('data', (data) => {
-    //         console.log('stderr: ' + data.toString());
-    //     });
-    //     p.on('close', (code) => {
-    //         console.log(`混合结束, code:${code}`);
-    //         res();
-    //     });
-    //     p.on('error', (error) => {
-    //         ctx.logger.error(error);
-    //         rej(error);
-    //     });
-    // });
+    await new Promise((res, rej) => {
+        let p = spawn('ffmpeg', mix_cmd);
+        p.stdout.on('data', (data) => {
+            console.log('stdout: ' + data.toString());
+        });
+        p.stderr.on('data', (data) => {
+            console.log('stderr: ' + data.toString());
+        });
+        p.on('close', (code) => {
+            console.log(`混合结束, code:${code}`);
+            res();
+        });
+        p.on('error', (error) => {
+            ctx.logger.error(error);
+            rej(error);
+        });
+    });
 })();
