@@ -102,8 +102,8 @@ const fromMicroseconds = (microseconds) => {
                 console.log('stderr: ' + line);
                 const t1 = line.split(',');
                 cur_et = `${t1[0].replace('Duration: ', '')}0`;
-                cur_st = fromMicroseconds(t1[1].replace('start: ', '') * 1000 * 1000);
-                console.log(t1[1].replace('start: ', '') * 1000 * 1000);
+                cur_st = fromMicroseconds(t1[1].replace('start: ', '') * 1000);
+                console.log(t1[1].replace('start: ', '') * 1000);
             }
         });
         p.stdout.on('data', (data) => {
