@@ -85,10 +85,13 @@ import { spawn, exec } from 'child_process';
             console.log('stdout: ' + data.toString());
         });
         p.stderr.on('data', (data) => {
-            console.log('stderr: ' + data.toString());
+            const line = data.toString();
+            if (line.indexOf('Duration') !== -1) {
+                console.log('stderr: ' + line);
+            }
         });
         p.on('close', (code) => {
-            console.log(`视频生成结束, code:${code}`);
+            console.log(`视频分析结束, code:${code}`);
             res();
         });
         p.on('error', (error) => {
