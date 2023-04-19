@@ -13,7 +13,7 @@ const fromMicroseconds = (microseconds) => {
 }
 
 (async () => {
-    const bv = "BV18o4y1h75v";
+    const bv = "BV1gX4y167aU";
     const res1 = await fetch(`https://api.bilibili.com/x/web-interface/view?bvid=${bv}`);
     const json1 = await res1.json();
     const cid = json1.data.cid;
