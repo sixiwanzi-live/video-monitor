@@ -39,7 +39,7 @@ import readline from 'readline';
     console.log(`audio:${audioUrl}`);
 
     const st = "01:00:00.000";
-    const et = "01:05:00.000";
+    const et = "01:01:00.000";
     const userAgent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/111.0.0.0 Safari/537.36";
     const referer = "https://www.bilibili.com";
     const audio_output = "1.m4a";
@@ -86,18 +86,12 @@ import readline from 'readline';
             input: p.stderr
         });
         rl.on('line', line => {
-            if (line.indexOf('Duration') !== -1) {
+            if (line.indexOf('Duration') !== -1 && line.indexOf('description')) {
                 console.log('stderr: ' + line);
             }
         });
         p.stdout.on('data', (data) => {
             console.log('stdout: ' + data.toString());
-        });
-        p.stderr.on('data', (data) => {
-            const line = data.toString();
-            if (line.indexOf('Duration') !== -1) {
-                console.log('stderr: ' + line);
-            }
         });
         p.on('close', (code) => {
             console.log(`视频分析结束, code:${code}`);
