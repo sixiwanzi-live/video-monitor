@@ -101,7 +101,7 @@ const fromMicroseconds = (microseconds) => {
             if (line.indexOf('Duration') !== -1 && line.indexOf('description')) {
                 console.log('stderr: ' + line);
                 const t1 = line.split(',');
-                cur_et = `${t1[0].replace('Duration:\t', '')}0`;
+                cur_et = `${t1[0].replace('Duration:    ', '')}0`;
                 cur_st = fromMicroseconds(t1[1].replace('start: ', '') * 1000);
                 console.log(t1[1].replace('start: ', '') * 1000);
             }
