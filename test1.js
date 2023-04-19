@@ -54,9 +54,10 @@ const fromMicroseconds = (microseconds) => {
     const referer = "https://www.bilibili.com";
     const audio_output = "1.m4a";
     const video_output = "1.mp4";
+    const video_tmp_output = "t.mp4";
     
-    // 获取视频切片
-    const video_cmd = [
+    // 获取视频测试切片
+    const video_tmp_cmd = [
         '-y',
         '-ss', st, 
         '-to', et, 
@@ -68,11 +69,11 @@ const fromMicroseconds = (microseconds) => {
         '-copyts',
         '-c', 'copy',
         '-avoid_negative_ts', 1,
-        video_output
+        video_tmp_output
     ];
 
     await new Promise((res, rej) => {
-        let p = spawn('ffmpeg', video_cmd);
+        let p = spawn('ffmpeg', video_tmp_cmd);
         p.stdout.on('data', (data) => {
             console.log('stdout: ' + data.toString());
         });
@@ -93,7 +94,7 @@ const fromMicroseconds = (microseconds) => {
     let cur_et = '';
     // 分析视频实际长度
     await new Promise((res, rej) => {
-        let p = spawn('ffprobe', [video_output]);
+        let p = spawn('ffprobe', [video_tmp_output]);
         const rl = readline.createInterface({
             input: p.stderr
         });
@@ -120,6 +121,39 @@ const fromMicroseconds = (microseconds) => {
     });
     console.log(`cur_st:${cur_st}`);
     console.log(`cur_et:${cur_et}`);
+
+    // 获取视频实际切片
+    const video_cmd = [
+        '-y',
+        '-ss', cur_st, 
+        '-to', cur_et, 
+        '-accurate_seek', 
+        '-seekable', 1, 
+        '-user_agent', userAgent, 
+        '-headers', `Referer: ${referer}`,
+        '-i', videoUrl,
+        '-c', 'copy',
+        '-avoid_negative_ts', 1,
+        video_output
+    ];
+
+    await new Promise((res, rej) => {
+        let p = spawn('ffmpeg', video_cmd);
+        p.stdout.on('data', (data) => {
+            console.log('stdout: ' + data.toString());
+        });
+        p.stderr.on('data', (data) => {
+            console.log('stderr: ' + data.toString());
+        });
+        p.on('close', (code) => {
+            console.log(`视频生成结束, code:${code}`);
+            res();
+        });
+        p.on('error', (error) => {
+            ctx.logger.error(error);
+            rej(error);
+        });
+    });
 
     const audio_cmd = [
         '-y',
