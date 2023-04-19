@@ -2,6 +2,16 @@ import fetch from 'node-fetch';
 import { spawn, exec } from 'child_process';
 import readline from 'readline';
 
+const fromMicroseconds = (microseconds) => {
+    const ms = parseInt(microseconds % 1000);
+    const seconds = parseInt(microseconds / 1000);
+    const ss = parseInt(seconds % 60);
+    const minutes = parseInt(seconds / 60);
+    const mm = parseInt(minutes % 60);
+    const hh = parseInt(minutes / 60);
+    return `${hh.toString().padStart(2, 0)}:${mm.toString().padStart(2, 0)}:${ss.toString().padStart(2, 0)}.${ms.toString().padStart(3, 0)}`;
+}
+
 (async () => {
     const bv = "BV1Rk4y1a7i8";
     const res1 = await fetch(`https://api.bilibili.com/x/web-interface/view?bvid=${bv}`);
@@ -79,6 +89,8 @@ import readline from 'readline';
         });
     });
 
+    let cur_st = '';
+    let cur_et = '';
     // 分析视频实际长度
     await new Promise((res, rej) => {
         let p = spawn('ffprobe', [video_output]);
@@ -88,6 +100,9 @@ import readline from 'readline';
         rl.on('line', line => {
             if (line.indexOf('Duration') !== -1 && line.indexOf('description')) {
                 console.log('stderr: ' + line);
+                const t1 = line.split(',');
+                cur_et = `${t1[0].replace('Duration: ', '')}0`;
+                cur_st = fromMicroseconds(t1[1].replace('start: ', '') * 1000 * 1000);
             }
         });
         p.stdout.on('data', (data) => {
@@ -102,6 +117,8 @@ import readline from 'readline';
             rej(error);
         });
     });
+    console.log(`cur_st:${cur_st}`);
+    console.log(`cur_et:${cur_et}`);
     // await new Promise((res, rej) => {
     //     exec(`ffprobe -user_agent "${userAgent}" -headers "Referer: ${referer}" -select_streams v -show_frames -show_entries frame=pict_type -of csv ${videoUrl} | grep -n I | cut -d ':' -f 1`, { windowsHide:true }, (err, stdout, stderr) => {
     //         console.log(stdout);
