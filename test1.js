@@ -37,8 +37,8 @@ import { spawn, exec } from 'child_process';
     console.log(`video:${videoUrl}`);
     console.log(`audio:${audioUrl}`);
 
-    const st = "01:00:00.000";
-    const et = "01:05:00.000";
+    const st = "00:59:59.083";
+    const et = "01:05:00.070";
     const userAgent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/111.0.0.0 Safari/537.36";
     const referer = "https://www.bilibili.com";
     const audio_output = "1.m4a";
