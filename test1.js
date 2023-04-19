@@ -1,5 +1,6 @@
 import fetch from 'node-fetch';
 import { spawn, exec } from 'child_process';
+import readline from 'readline';
 
 (async () => {
     const bv = "BV1Rk4y1a7i8";
@@ -37,8 +38,8 @@ import { spawn, exec } from 'child_process';
     console.log(`video:${videoUrl}`);
     console.log(`audio:${audioUrl}`);
 
-    const st = "00:59:59.083";
-    const et = "01:05:00.070";
+    const st = "01:00:00.000";
+    const et = "01:05:00.000";
     const userAgent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/111.0.0.0 Safari/537.36";
     const referer = "https://www.bilibili.com";
     const audio_output = "1.m4a";
@@ -81,6 +82,14 @@ import { spawn, exec } from 'child_process';
     // 分析视频实际长度
     await new Promise((res, rej) => {
         let p = spawn('ffprobe', [video_output]);
+        const rl = readline.createInterface({
+            input: p.stderr
+        });
+        rl.on('line', line => {
+            if (line.indexOf('Duration') !== -1) {
+                console.log('stderr: ' + line);
+            }
+        });
         p.stdout.on('data', (data) => {
             console.log('stdout: ' + data.toString());
         });
