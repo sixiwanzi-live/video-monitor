@@ -159,15 +159,15 @@ const fromMicroseconds = (microseconds) => {
         '-y',
         '-ss', cur_st, 
         '-to', cur_et, 
-        '-accurate_seek', 
-        '-seekable', 1, 
+        // '-accurate_seek', 
+        // '-seekable', 1, 
         '-user_agent', userAgent, 
         '-headers', `Referer: ${referer}`,
         '-i', audioUrl,
         '-ar', '44100',
         '-ab', '128k',
         // '-c', 'copy',
-        '-avoid_negative_ts', 1,
+        // '-avoid_negative_ts', 1,
         audio_output
     ];
 
