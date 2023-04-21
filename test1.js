@@ -164,6 +164,8 @@ const fromMicroseconds = (microseconds) => {
         '-user_agent', userAgent, 
         '-headers', `Referer: ${referer}`,
         '-i', audioUrl,
+        '-ar', '44100',
+        '-ab', '128k',
         // '-c', 'copy',
         '-avoid_negative_ts', 1,
         audio_output
