@@ -3,6 +3,7 @@ import ZimuApi from './api/ZimuApi.js';
 
 const clipIds = [13318,13319,13320,13325,13328,13330,13337,13338,13342,13352,13354,13355,13359,13368,13369,13373,13385,13387,13390,13401];
 (async() => {
+    let tasks = [];
     for (let i = 0; i < clipIds.length; ++i) {
         const clipId = clipIds[i];
         const clip = await ZimuApi.findClip(clipId);
