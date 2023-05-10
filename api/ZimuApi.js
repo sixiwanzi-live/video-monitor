@@ -30,6 +30,16 @@ export default class ZimuApi {
         }
     }
 
+    static async findClip(clipId) {
+        const url = `${config.zimu.url}/clips/${clipId}`;
+        return await (await fetch(url)).json();
+    }
+
+    static async findAuthorById(authorId) {
+        const url = `${config.zimu.url}/authors/${authorId}`;
+        return await (await fetch(url)).json();
+    }
+
     static async insertSubtitle(clipId, srt) {
         const url = `${config.zimu.url}/clips/${clipId}/subtitles`;
         const res = await fetch(url, {
