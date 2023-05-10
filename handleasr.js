@@ -32,6 +32,6 @@ const clipIds = [13318,13319,13320,13325,13328,13330,13337,13338,13342,13352,133
                 }
             }));
         }
-        await Promise.all(tasks);
     }
+    await Promise.all(tasks);
 })()
