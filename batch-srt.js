@@ -3,8 +3,8 @@ import fetch from "node-fetch";
 import ZimuApi from "./api/ZimuApi.js";
 
 (async () => {
-    const organzationId = 12;
-    const authorId = 51;
+    const organzationId = 15;
+    const authorId = 73;
 
     const clips = await ZimuApi.findClipsByOrganizationId(organzationId);
     const filteredClips = clips.filter(clip => clip.authorId === authorId && clip.type === 1);
@@ -16,7 +16,7 @@ import ZimuApi from "./api/ZimuApi.js";
         if (srtText.length === 0) {
             console.log(`Clip(${clip.id},${clip.datetime},${clip.title})未找到字幕，开始生成`);
             const bv = clip.playUrl.substring(clip.playUrl.indexOf("BV"), clip.playUrl.length);
-            const subtitleUrl = `http://192.168.2.30:7777/asr?bv=${bv}`;
+            const subtitleUrl = `http://jy.zimu.bili.studio:8000/asr?bv=${bv}`;
             const subtitleRes = await fetch(subtitleUrl);
             const subtitle = await subtitleRes.text();
             console.log(`Clip(${clip.id},${clip.datetime},${clip.title})字幕生成完毕`);
